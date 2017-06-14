@@ -30,9 +30,9 @@ namespace RuleEngine
         }
 
         /// <summary>
-        /// function to validate json object based on JavaScript Logical Expression
+        /// function to validate object based on BLogic language Logical Expression 
         /// </summary>
-        /// <param name="bLogicalExpression">JavaScript BLogical Expression</param>
+        /// <param name="bLogicalExpression">BLogic Logical Expression</param>
         /// <param name="objectToValidate">C# object To Validate</param>
         /// <returns>boolean result</returns>
         public static bool Evaluate(string bLogicalExpression, object objectToValidate)
