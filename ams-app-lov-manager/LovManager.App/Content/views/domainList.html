@@ -1,0 +1,38 @@
+﻿<style>
+    .top-buffer { margin-top:10px; }
+</style>
+<div class="container customer-form">
+
+    <div class="row">
+        <h2>Lov Domains List</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-4">
+                    <button class="btn btn-primary" ng-click="goToDomain()">
+                        Create New List Of Value Domain
+                    </button>
+                </div>
+            </div>
+            <br />
+            <br />
+            <br />
+
+            <div class="row top-buffer" ng-repeat="domain in domainList">
+                <div class="col-sm-8">
+                    {{domain.Name}}
+                </div>
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-primary btn-block" ng-click="goToDomain(domain.Id)">
+                        Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

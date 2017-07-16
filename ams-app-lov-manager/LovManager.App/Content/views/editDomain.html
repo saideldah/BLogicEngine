@@ -1,0 +1,112 @@
+﻿<style>
+    .top-buffer {
+        margin-top: 10px;
+    }
+
+    th {
+        font-weight: bold;
+        font-size: 80%;
+        text-transform: uppercase;
+        background-color: #dedeff !important;
+    }
+
+    tbody {
+        font-size: 80%;
+    }
+
+    .table > tbody > tr:nth-child(even) {
+        background-color: #f5f5f5;
+    }
+</style>
+
+<div class="container customer-form">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>List Of Value Domain</h2>
+        </div>
+    </div>
+    <!--Domain Name-->
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <h4>Domain Name: {{domain.Name}}</h4>
+        </div>
+    </div>
+    <!--Parent Domain-->
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <!--ng-change="enablePersonalInformationMonthList()"
+            ng-options="y for y in yearList track by y"-->
+            <h4>Parent Domain: {{parentDomain}}</h4>
+        </div>
+    </div>
+    <br />
+
+    <!--Upload Download-->
+    <div class="row top-buffer">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div id="updatePanelFile" class="alert" role="alert" style="display:none;">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="btn btn-default">
+                    Upload LOV File (*.csv) <input type="file" id="file1" style="display: none !important" />
+                </label>
+                <a ng-href="{{downloadFileUri}}" target="_blank">{{downloadBtnTitle}}</a>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Buttons-->
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <button id="btnPostFile" class="btn btn-primary" ng-click="save()">Submit</button>
+            <button id="btnPostFile" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <!--Lov List-->
+    <div class="row">
+        <div class="col-md-12">
+            <h3>List Of Value</h3>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <label> Search: <input type="text" ng-model="query"></label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>ParentCode</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr ng-repeat="lov in domain.ListOfValueList | filter : query">
+
+                        <td>{{lov.Code}}</td>
+                        <td>{{lov.Description}}</td>
+                        <td>{{lov.ParentCode}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+
+  
+
+</div>

@@ -1,0 +1,103 @@
+﻿<style>
+    .top-buffer {
+        margin-top: 10px;
+    }
+
+    th {
+        font-weight: normal;
+        font-size: 80%;
+        text-transform: uppercase;
+        background-color: #dedeff !important;
+
+    }
+    tbody {
+
+        font-size: 80%;
+    }
+
+    .table > tbody > tr:nth-child(even) {
+        background-color: #f5f5f5;
+    }
+</style>
+
+<div class="container customer-form">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>List Of Value Domain</h2>
+        </div>
+    </div>
+    <!--Domain Name-->
+    <div class="row top-buffer">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="DomainName">Domain Name:</label>
+                <input type="text" ng-model="lovDomain.Name" placeholder="Insert Domain Name" required  class="form-control" id="DomainName">
+            </div>
+        </div>
+    </div>
+    <!--Parent Domain-->
+    <div class="row top-buffer">
+        <div class="col-md-4">
+            <!--ng-change="enablePersonalInformationMonthList()"
+            ng-options="y for y in yearList track by y"-->
+            <label for="ParentDomain">Parent Domain:</label>
+            <select class="form-control" id="ParentDomain" name="dateOfBirthYear"
+                    ng-model="parentDomainId">
+                <option value="">No Parent</option>
+                <option value="{{domain.Id}}" ng-repeat="domain in domainList">{{domain.Name}}</option>
+            </select>
+        </div>
+    </div>
+    <br />
+    <!--Lov List-->
+    <div class="row" ng-hide="hideLovTable">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Description</th>
+                        <th>ParentId</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr ng-repeat="lov in lovDomain.lovList">
+
+                        <td>{{lov.Code}}</td>
+                        <td>{{lov.Description}}</td>
+                        <td>{{lov.ParentId}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+
+    <!--Upload Download-->
+    <div class="row top-buffer">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div id="updatePanelFile" class="alert" role="alert" style="display:none;">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="btn btn-default">
+                    Upload LOV File (*.csv) <input type="file" id="file1" style="display: none !important"/>
+                </label>
+                <a ng-href="{{downloadFileUri}}" target="_blank">{{downloadBtnTitle}}</a>
+
+            </div>
+        </div>
+    </div>
+
+    <!--Buttons-->
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <button id="btnPostFile" class="btn btn-primary" ng-click="save()">Submit</button>
+            <button id="btnPostFile" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+
+</div>
