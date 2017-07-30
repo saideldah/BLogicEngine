@@ -11,18 +11,6 @@ alter table Cover
 go
 
 
-create table CoverMapping (
-   Id                   uniqueidentifier     not null,
-   CoverId              uniqueidentifier     not null,
-   CodeBack             nvarchar(200)        null
-)
-go
-
-alter table CoverMapping
-   add constraint PK_COVERMAPPING primary key (Id)
-go
-
-
 create table LineOfBusiness (
    Id                   uniqueidentifier     not null,
    Code                 nvarchar(200)        not null,
@@ -47,6 +35,8 @@ go
 alter table LineOfBusinessProperty
    add constraint PK_LINEOFBUSINESSPROPERTY primary key (Id)
 go
+
+
 
 create table LobGroup (
    Id                   uniqueidentifier     not null,
@@ -114,6 +104,7 @@ alter table ProductCoverProperty
    add constraint PK_PRODUCTCOVERPROPERTY primary key (Id)
 go
 
+
 create table ProductMapping (
    Id                   uniqueidentifier     not null,
    MappingRule          nvarchar(MAX)        not null,
@@ -126,6 +117,7 @@ go
 alter table ProductMapping
    add constraint PK_PRODUCTMAPPING primary key (Id)
 go
+
 
 create table ProductPackage (
    Id                   uniqueidentifier     not null,
@@ -142,7 +134,7 @@ go
 create table ProductSetupFile (
    Id                   uniqueidentifier     not null,
    LibraryName          nvarchar(MAX)        not null,
-   FolderPath           int                  not null,
+   FolderPath           nvarchar(MAX)        not null,
    OriginFileName       nvarchar(MAX)        not null,
    UploadedFileName     nvarchar(MAX)        not null,
    FilePath             nvarchar(MAX)        not null,
@@ -194,11 +186,6 @@ go
 
 alter table SmiProperty
    add constraint PK_SMIPROPERTY primary key (Id)
-go
-
-alter table CoverMapping
-   add constraint FK_COVERMAP_REFERENCE_COVER foreign key (CoverId)
-      references Cover (Id)
 go
 
 alter table LineOfBusiness

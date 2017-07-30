@@ -40,8 +40,11 @@ namespace JIC.Business.ProductSetup.Manager
         private PackageRepository PackageRepositoryObject { get; set; }
         private ProductRepository ProductRepositoryObject { get; set; }
         private CoverRepository CoverRepositoryObject { get; set; }
-        private CoverMappingRepository CoverMappingRepositoryObject { get; set; }
-        private ProductSetupRepository ProductSetupRepositoryObject { get; set; }
+        private ProductMappingRepository ProductMappingRepositoryObject { get; set; }
+        private ProductSetupFileRepository ProductSetupFileRepositoryObject { get; set; }
+
+        private SmiRepository SmiRepositoryObject { get; set; }
+
 
         #endregion
 
@@ -54,8 +57,9 @@ namespace JIC.Business.ProductSetup.Manager
             PackageRepositoryObject = PackageRepository.CreateInstance();
             ProductRepositoryObject = ProductRepository.CreateInstance();
             CoverRepositoryObject = CoverRepository.CreateInstance();
-            ProductSetupRepositoryObject = ProductSetupRepository.CreateInstance();
-            CoverMappingRepositoryObject = CoverMappingRepository.CreateInstance();
+            ProductSetupFileRepositoryObject = ProductSetupFileRepository.CreateInstance();
+            ProductMappingRepositoryObject = ProductMappingRepository.CreateInstance();
+            SmiRepositoryObject = SmiRepository.CreateInstance();
         }
         #endregion
 
@@ -1047,287 +1051,345 @@ namespace JIC.Business.ProductSetup.Manager
             ProductSetupModel productSetupModel = MapProductSetupWorkbookToProductSetupModel(uploadedFileWorkBook);
 
             //Validate the Model
-
-
-            SaveFile(productSetupFileModel);
             return errorList;
         }
 
         //todo: needs documentation
         public List<ErrorModel> SaveFile(ProductSetupFileModel productSetupFileModel)
         {
-            ProductSetupRepositoryObject.DeleteAll();
-            List<ErrorModel> errorList = new List<ErrorModel>();
-            //List<ErrorModel> errorList = Validate(productSetupFileModel);
-
-
-            Workbook uploadedFileWorkBook = RetrieveFileWorkbook(productSetupFileModel.FilePath);
-
-            //Map the file to product setup Model
-            ProductSetupModel productSetupModelObject = MapProductSetupWorkbookToProductSetupModel(uploadedFileWorkBook);
-
-
-            /*
-            # Save Process with following order
-            
-            # Map Properties To Entity
-            # Save Properties
-
-            Map Groups Entity
-            Save Groups
-
-
-            Map Line Of Business Entity
-            Save Line Of Business
-            Save Line Of Business Properties
-
-            Map Packages Entity
-            Save Packages
-            Save Packages Properties
-
-            Map Packages Entity
-            Save Products
-            Save Products Properties
-
-            Map Products Mapping Entity
-            Save Products Mapping
-            
-            Map Covers Entity
-            Save Covers
-            Save Covers Properties
-
-            Map Covers Mapping Entity
-            Save Cover Mapping
-
-            Map smi Entity
-            Save smi
-            Save smi Properties
-
-            Map product setup file Entity
-            Save product setup file
-
-            Note: make it in transaction scope
-            */
-
-            List<CoverEntity> allCoverEntityList = new List<CoverEntity>();
-            List<CoverModel> allCoverModelObjectList = new List<CoverModel>();
-            List<string> linkedProductCoverProperty= new List<string>();
-            List<string> linkedProductMapping = new List<string>();
-
-            #region Save Properties
-            //Map Properties To Entity
-            var propertyModelList = productSetupModelObject.PropertyList;
-            List<PropertyEntity> allPropertyEntityList = ProductSetupMapper.PropertyModelListToPropertyEntityList(propertyModelList);
-            //Save Properties
-            allPropertyEntityList = this.PropertyRepositoryObject.InsertMany(allPropertyEntityList);
-            #endregion
-
-            #region Save Line Of Business Group Groups
-
-            // Map Groups Entity
-            List<LineOfBusinessGroupModel> lineOfBusinessGroupModelObjectList = productSetupModelObject.LineOfBusinessGroupList;
-            List<LineOfBusinessGroupEntity> lineOfBusinessGroupEntityList = ProductSetupMapper.LineOfBusinessGroupModelListToLineOfBusinessGroupEntityList(lineOfBusinessGroupModelObjectList);
-             //save line of business group
-             lineOfBusinessGroupEntityList = LineOfBusinessGroupRepositoryObject.InsertMany(lineOfBusinessGroupEntityList);
-
-            #region for each groupe save related line of business
-            foreach (var lineOfBusinessGroupModelObject in lineOfBusinessGroupModelObjectList)
+            try
             {
+                ProductSetupFileRepositoryObject.DeleteAll();
+                List<ErrorModel> errorList = new List<ErrorModel>();
+                //List<ErrorModel> errorList = Validate(productSetupFileModel);
 
-                List<LineOfBusinessModel> lineOfBusinessModelObjectList = lineOfBusinessGroupModelObject.LineOfBusinessList;
-                var lineOfBusinessGroupEntityObject = lineOfBusinessGroupEntityList.FirstOrDefault(lobg => lobg.Code == lineOfBusinessGroupModelObject.Code);
-                if (lineOfBusinessGroupEntityObject != null)
+
+                Workbook uploadedFileWorkBook = RetrieveFileWorkbook(productSetupFileModel.FilePath);
+
+                //Map the file to product setup Model
+                ProductSetupModel productSetupModelObject = MapProductSetupWorkbookToProductSetupModel(uploadedFileWorkBook);
+
+
+                /*
+                # Save Process with following order
+
+                # Map Properties To Entity
+                # Save Properties
+
+                Map Groups Entity
+                Save Groups
+
+
+                Map Line Of Business Entity
+                Save Line Of Business
+                Save Line Of Business Properties
+
+                Map Packages Entity
+                Save Packages
+                Save Packages Properties
+
+                Map Packages Entity
+                Save Products
+                Save Products Properties
+
+                Map Products Mapping Entity
+                Save Products Mapping
+
+                Map Covers Entity
+                Save Covers
+                Save Covers Properties
+
+                Map Covers Mapping Entity
+                Save Cover Mapping
+
+                Map smi Entity
+                Save smi
+                Save smi Properties
+
+                Map product setup file Entity
+                Save product setup file
+
+                Note: make it in transaction scope
+                */
+
+                List<CoverEntity> allCoverEntityList = new List<CoverEntity>();
+                List<CoverModel> allCoverModelObjectList = new List<CoverModel>();
+                List<string> linkedProductCoverProperty = new List<string>();
+                List<string> linkedProductMapping = new List<string>();
+
+                #region Save Properties
+                //Map Properties To Entity
+                var propertyModelList = productSetupModelObject.PropertyList;
+                List<PropertyEntity> allPropertyEntityList = ProductSetupMapper.PropertyModelListToPropertyEntityList(propertyModelList);
+                //Save Properties
+                allPropertyEntityList = this.PropertyRepositoryObject.InsertMany(allPropertyEntityList);
+                #endregion
+
+                #region Save Line Of Business Group Groups
+
+                // Map Groups Entity
+                List<LineOfBusinessGroupModel> lineOfBusinessGroupModelObjectList = productSetupModelObject.LineOfBusinessGroupList;
+                List<LineOfBusinessGroupEntity> lineOfBusinessGroupEntityList = ProductSetupMapper.LineOfBusinessGroupModelListToLineOfBusinessGroupEntityList(lineOfBusinessGroupModelObjectList);
+                //save line of business group
+                lineOfBusinessGroupEntityList = LineOfBusinessGroupRepositoryObject.InsertMany(lineOfBusinessGroupEntityList);
+
+                #region for each groupe save related line of business
+                foreach (var lineOfBusinessGroupModelObject in lineOfBusinessGroupModelObjectList)
                 {
-                    // Map line of business Entity
-                    List<LineOfBusinessEntity> lineOfBusinessEntityList = ProductSetupMapper.LineOfBusinessModelListToLineOfBusinessEntityList(lineOfBusinessModelObjectList, lineOfBusinessGroupEntityObject.Id);
 
-                    //save line of business group
-                    lineOfBusinessEntityList = LineOfBusinessRepositoryObject.InsertMany(lineOfBusinessEntityList);
-
-                    #region  for each line of business save packages and related properties
-                    foreach (var lineOfBusinessModelObject in lineOfBusinessModelObjectList)
+                    List<LineOfBusinessModel> lineOfBusinessModelObjectList = lineOfBusinessGroupModelObject.LineOfBusinessList;
+                    var lineOfBusinessGroupEntityObject = lineOfBusinessGroupEntityList.FirstOrDefault(lobg => lobg.Code == lineOfBusinessGroupModelObject.Code);
+                    if (lineOfBusinessGroupEntityObject != null)
                     {
+                        // Map line of business Entity
+                        List<LineOfBusinessEntity> lineOfBusinessEntityList = ProductSetupMapper.LineOfBusinessModelListToLineOfBusinessEntityList(lineOfBusinessModelObjectList, lineOfBusinessGroupEntityObject.Id);
 
-                        LineOfBusinessEntity lineOfBusinessEntityObject = lineOfBusinessEntityList.FirstOrDefault(lob => lob.Code == lineOfBusinessModelObject.Code);
-                        if (lineOfBusinessEntityObject != null)
+                        //save line of business group
+                        lineOfBusinessEntityList = LineOfBusinessRepositoryObject.InsertMany(lineOfBusinessEntityList);
+
+                        #region  for each line of business save packages and related properties
+                        foreach (var lineOfBusinessModelObject in lineOfBusinessModelObjectList)
                         {
-                            #region Save Line Of Business related properties
-                            List<PropertyModel> lineOfBusinessPropertyModelObjectList = lineOfBusinessModelObject.PropertyList;
-                            List<PropertyEntity> propertyEntityObjectList = new List<PropertyEntity>();
 
-                            foreach (var lineOfBusinessPropertyModelObject in lineOfBusinessPropertyModelObjectList)
+                            LineOfBusinessEntity lineOfBusinessEntityObject = lineOfBusinessEntityList.FirstOrDefault(lob => lob.Code == lineOfBusinessModelObject.Code);
+                            if (lineOfBusinessEntityObject != null)
                             {
-                                PropertyEntity propertyEntityObject = allPropertyEntityList.FirstOrDefault(p => p.Code == lineOfBusinessPropertyModelObject.Code);
-                                if (propertyEntityObject != null)
+                                #region Save Line Of Business related properties
+                                List<PropertyModel> lineOfBusinessPropertyModelObjectList = lineOfBusinessModelObject.PropertyList;
+                                List<PropertyEntity> propertyEntityObjectList = new List<PropertyEntity>();
+
+                                foreach (var lineOfBusinessPropertyModelObject in lineOfBusinessPropertyModelObjectList)
                                 {
-                                    propertyEntityObject.Value = lineOfBusinessPropertyModelObject.Value;
-                                    propertyEntityObjectList.Add(propertyEntityObject);
-                                }
-                            }
-                            foreach (var item in propertyEntityObjectList)
-                            {
-                                LineOfBusinessRepositoryObject.LinkLineOfBusinessToProperty(lineOfBusinessEntityObject, item);
-                            }
-                            //LineOfBusinessRepositoryObject.LinkLineOfBusinessToManyProperty(lineOfBusinessEntityObject, propertyEntityObjectList);
-                            #endregion
-
-                            #region Save related Packages
-                            List<PackageModel> packageModelObjectList = lineOfBusinessModelObject.PackageList;
-                            List<PackageEntity> packageEntityObjectList = ProductSetupMapper.PackageModelListToPackageEntityList(packageModelObjectList, lineOfBusinessEntityObject.Id);
-                            packageEntityObjectList = PackageRepositoryObject.InsertMany(packageEntityObjectList);
-
-
-                            #region Collect and Save all products
-                            List<ProductEntity> productEntityObjectList = new List<ProductEntity>();
-
-                            foreach (var packageModelObject in packageModelObjectList)
-                            {
-                                var packageEntityObject = packageEntityObjectList.FirstOrDefault(p => p.Code == packageModelObject.Code);
-                                if (packageEntityObject != null)
-                                {
-                                    List<ProductModel> productModelObjectList = packageModelObject.ProductList;
-                                    var productList = ProductSetupMapper.ProductModelListToProductEntityList(productModelObjectList, packageEntityObject.Id);
-                                    foreach (var product in productList)
+                                    PropertyEntity propertyEntityObject = allPropertyEntityList.FirstOrDefault(p => p.Code == lineOfBusinessPropertyModelObject.Code);
+                                    if (propertyEntityObject != null)
                                     {
-                                        if (!productEntityObjectList.Any(p => p.Code == product.Code))
-                                        {
-                                            productEntityObjectList.Add(product);
-                                        }
+                                        propertyEntityObject.Value = lineOfBusinessPropertyModelObject.Value;
+                                        propertyEntityObjectList.Add(propertyEntityObject);
                                     }
                                 }
-                           
-                            }
-                            productEntityObjectList = ProductRepositoryObject.InsertMany(productEntityObjectList);
-                            #endregion
-
-                            #region for each Package save related property and product
-                 
-                            foreach (var packageModelObject in packageModelObjectList)
-                            {
-
-                                PackageEntity packageEntityObject = packageEntityObjectList.FirstOrDefault(p => p.Code == packageModelObject.Code);
-                                if (packageEntityObject != null)
+                                foreach (var item in propertyEntityObjectList)
                                 {
-                                    #region Save related Package properties
-                                    List<PropertyModel> packagePropertyModelObjectList = packageModelObject.PropertyList;
-                                    List<PropertyEntity> packagePropertyEntityObjectList = new List<PropertyEntity>();
-                                    foreach (var packagePropertyModelObject in packagePropertyModelObjectList)
-                                    {
-                                        PropertyEntity propertyEntityObject = allPropertyEntityList.FirstOrDefault(p => p.Code == packagePropertyModelObject.Code);
+                                    LineOfBusinessRepositoryObject.LinkLineOfBusinessToProperty(lineOfBusinessEntityObject, item);
+                                }
+                                //LineOfBusinessRepositoryObject.LinkLineOfBusinessToManyProperty(lineOfBusinessEntityObject, propertyEntityObjectList);
+                                #endregion
 
-                                        if (propertyEntityObject != null)
+                                #region Save related Packages
+                                List<PackageModel> packageModelObjectList = lineOfBusinessModelObject.PackageList;
+                                List<PackageEntity> packageEntityObjectList = ProductSetupMapper.PackageModelListToPackageEntityList(packageModelObjectList, lineOfBusinessEntityObject.Id);
+                                packageEntityObjectList = PackageRepositoryObject.InsertMany(packageEntityObjectList);
+
+
+                                #region Collect and Save all products
+                                List<ProductEntity> productEntityObjectList = new List<ProductEntity>();
+
+                                foreach (var packageModelObject in packageModelObjectList)
+                                {
+                                    var packageEntityObject = packageEntityObjectList.FirstOrDefault(p => p.Code == packageModelObject.Code);
+                                    if (packageEntityObject != null)
+                                    {
+                                        List<ProductModel> productModelObjectList = packageModelObject.ProductList;
+                                        var productList = ProductSetupMapper.ProductModelListToProductEntityList(productModelObjectList, packageEntityObject.Id);
+                                        foreach (var product in productList)
                                         {
-                                            propertyEntityObject.Value = packagePropertyModelObject.Value;
-                                            packagePropertyEntityObjectList.Add(propertyEntityObject);
-                                        }
-                                    }
-                                    foreach (var item in packagePropertyEntityObjectList)
-                                    {
-                                        PackageRepositoryObject.LinkPackageToProperty(packageEntityObject, item);
-                                    }
-                                    //PackageRepositoryObject.LinkPackageToManyProperty(packageEntityObject, packagePropertyEntityObjectList);
-
-                                    #endregion
-
-                                    #region Save related Products
-
-
-                                    List<ProductModel> productModelObjectList = packageModelObject.ProductList;
-                                    List<ProductEntity> packageRelatedProductEntityObjectList = new List<ProductEntity>();
-
-                                    foreach (var productModel in productModelObjectList)
-                                    {
-                                        var productEntity = productEntityObjectList.FirstOrDefault(p => p.Code == productModel.Code);
-                                        if (productEntity != null)
-                                        {
-                                            productEntity.PackageId = packageEntityObject.Id;
-                                            PackageRepositoryObject.LinkPackageToProduct(packageEntityObject, productEntity);
-
-                                        }
-                                    }
-
-
-                                  
-                                    #region Collect and Save all Covers
-                                    foreach (var productModelObject in productModelObjectList)
-                                    {
-                                        List<CoverModel> productCoverModelObjectList = productModelObject.CoverList;
-
-                                        foreach (var productCover in productCoverModelObjectList)
-                                        {
-                                            if (!allCoverEntityList.Any(c => c.Code == productCover.Code))
+                                            if (!productEntityObjectList.Any(p => p.Code == product.Code))
                                             {
-                                                //Map cover model list
-                                                var cover = ProductSetupMapper.CoverModelToCoverEntity(productCover);
-                                                //Save all Cover Model 
-                                                var coverEntity = CoverRepositoryObject.Insert(cover);
-                                                allCoverEntityList.Add(coverEntity);
+                                                productEntityObjectList.Add(product);
                                             }
                                         }
                                     }
-                                 
-                                    #endregion
 
-                                    #region For Each Product, Save Related Cover And Product Mapping
-                                    foreach (var productModelObject in productModelObjectList)
+                                }
+                                productEntityObjectList = ProductRepositoryObject.InsertMany(productEntityObjectList);
+                                #endregion
+
+                                #region for each Package save related property and product
+
+                                foreach (var packageModelObject in packageModelObjectList)
+                                {
+
+                                    PackageEntity packageEntityObject = packageEntityObjectList.FirstOrDefault(p => p.Code == packageModelObject.Code);
+                                    if (packageEntityObject != null)
                                     {
-                                        ProductEntity productEntityObject = productEntityObjectList.FirstOrDefault(p => p.Code == productModelObject.Code);
-                                        if (productEntityObject != null)
+                                        #region Save related Package properties
+                                        List<PropertyModel> packagePropertyModelObjectList = packageModelObject.PropertyList;
+                                        List<PropertyEntity> packagePropertyEntityObjectList = new List<PropertyEntity>();
+                                        foreach (var packagePropertyModelObject in packagePropertyModelObjectList)
                                         {
-                                            #region Save Related Covers
-                                            List<CoverEntity> productRelatedCoverEntityList = new List<CoverEntity>();
-                                            List<CoverModel> productCoverModelObjectList = productModelObject.CoverList;
-                                            foreach (var productCoverModel in productCoverModelObjectList)
-                                            {
-                                                CoverEntity productRelatedCoverEntity = allCoverEntityList.FirstOrDefault(c => c.Code == productCoverModel.Code);
-                                                if (productRelatedCoverEntity != null)
-                                                {
-                                                    foreach (var coverProperty in productCoverModel.PropertyList)
-                                                    {
-                                                        var propertyEntity = allPropertyEntityList.FirstOrDefault(p => p.Code == coverProperty.Code);
+                                            PropertyEntity propertyEntityObject = allPropertyEntityList.FirstOrDefault(p => p.Code == packagePropertyModelObject.Code);
 
-                                                        if (propertyEntity != null)
+                                            if (propertyEntityObject != null)
+                                            {
+                                                propertyEntityObject.Value = packagePropertyModelObject.Value;
+                                                packagePropertyEntityObjectList.Add(propertyEntityObject);
+                                            }
+                                        }
+                                        foreach (var item in packagePropertyEntityObjectList)
+                                        {
+                                            PackageRepositoryObject.LinkPackageToProperty(packageEntityObject, item);
+                                        }
+                                        //PackageRepositoryObject.LinkPackageToManyProperty(packageEntityObject, packagePropertyEntityObjectList);
+
+                                        #endregion
+
+                                        #region Save related Products
+
+
+                                        List<ProductModel> productModelObjectList = packageModelObject.ProductList;
+                                        List<ProductEntity> packageRelatedProductEntityObjectList = new List<ProductEntity>();
+
+                                        foreach (var productModel in productModelObjectList)
+                                        {
+                                            var productEntity = productEntityObjectList.FirstOrDefault(p => p.Code == productModel.Code);
+                                            if (productEntity != null)
+                                            {
+                                                productEntity.PackageId = packageEntityObject.Id;
+                                                PackageRepositoryObject.LinkPackageToProduct(packageEntityObject, productEntity);
+
+                                            }
+                                        }
+
+
+
+                                        #region Collect and Save all Covers
+                                        foreach (var productModelObject in productModelObjectList)
+                                        {
+                                            List<CoverModel> productCoverModelObjectList = productModelObject.CoverList;
+
+                                            foreach (var productCover in productCoverModelObjectList)
+                                            {
+                                                if (!allCoverEntityList.Any(c => c.Code == productCover.Code))
+                                                {
+                                                    //Map cover model list
+                                                    var cover = ProductSetupMapper.CoverModelToCoverEntity(productCover);
+                                                    //Save all Cover Model 
+                                                    var coverEntity = CoverRepositoryObject.Insert(cover);
+                                                    allCoverEntityList.Add(coverEntity);
+                                                }
+                                            }
+                                        }
+
+                                        #endregion
+
+                                        #region For Each Product, Save Related Cover And Product Mapping
+                                        foreach (var productModelObject in productModelObjectList)
+                                        {
+                                            ProductEntity productEntityObject = productEntityObjectList.FirstOrDefault(p => p.Code == productModelObject.Code);
+                                            if (productEntityObject != null)
+                                            {
+                                                #region Save Related Covers
+                                                List<CoverEntity> productRelatedCoverEntityList = new List<CoverEntity>();
+                                                List<CoverModel> productCoverModelObjectList = productModelObject.CoverList;
+                                                foreach (var productCoverModel in productCoverModelObjectList)
+                                                {
+                                                    CoverEntity productRelatedCoverEntity = allCoverEntityList.FirstOrDefault(c => c.Code == productCoverModel.Code);
+                                                    if (productRelatedCoverEntity != null)
+                                                    {
+                                                        foreach (var coverProperty in productCoverModel.PropertyList)
                                                         {
-                                                            //i created list of string to check if the (productEntityObject.Code + productRelatedCoverEntity.Code + propertyEntity.Code) inserted or not
-                                                            if (!linkedProductCoverProperty.Any(pcp => pcp == productEntityObject.Code + productRelatedCoverEntity.Code + propertyEntity.Code))
+                                                            var propertyEntity = allPropertyEntityList.FirstOrDefault(p => p.Code == coverProperty.Code);
+
+                                                            if (propertyEntity != null)
                                                             {
-                                                                propertyEntity.Value = coverProperty.Value;
-                                                                ProductRepositoryObject.LinkProductToCoverProperty(productEntityObject, productRelatedCoverEntity, propertyEntity);
-                                                                linkedProductCoverProperty.Add(productEntityObject.Code + productRelatedCoverEntity.Code + propertyEntity.Code);
+                                                                //i created list of string to check if the (productEntityObject.Code + productRelatedCoverEntity.Code + propertyEntity.Code) inserted or not
+                                                                if (!linkedProductCoverProperty.Any(pcp => pcp == productEntityObject.Code + productRelatedCoverEntity.Code + propertyEntity.Code))
+                                                                {
+                                                                    propertyEntity.Value = coverProperty.Value;
+                                                                    ProductRepositoryObject.LinkProductToCoverProperty(productEntityObject, productRelatedCoverEntity, propertyEntity);
+                                                                    linkedProductCoverProperty.Add(productEntityObject.Code + productRelatedCoverEntity.Code + propertyEntity.Code);
+                                                                }
+
                                                             }
-                                                          
                                                         }
                                                     }
                                                 }
+                                                #endregion
+
+                                                #region Save Product Mapping
+                                                List<ProductMappingModel> productMappingModelList = productModelObject.ProductMappingList;
+                                                List<ProductMappingEntity> productMappingEntityList = ProductSetupMapper.ProductMappingModelListToProductMappingEntityList(productMappingModelList, productEntityObject.Id);
+                                                foreach (var productMappingEntity in productMappingEntityList)
+                                                {
+                                                    if (!linkedProductMapping.Any(pm => pm == productEntityObject.Code + productMappingEntity.CodeBack))
+                                                    {
+                                                        var result = ProductMappingRepositoryObject.Insert(productMappingEntity);
+                                                        productMappingEntity.Id = result.Id;
+                                                        linkedProductMapping.Add(productEntityObject.Code + productMappingEntity.CodeBack);
+                                                    }
+                                                }
+                                                #endregion
                                             }
-                                            #endregion
 
-                                            #region Save Product Mapping
-                                            List<ProductMappingModel> productMappingModelList = productModelObject.ProductMappingList;
-                                            List<ProductMappingEntity> x = ProductSetupMapper.ProductMappingModelListToProductMappingEntityList(productMappingModelList, productEntityObject.Id);
-                                            #endregion
                                         }
+                                        #endregion
 
+                                        #endregion
                                     }
-                                    #endregion
-
-                                    #endregion
                                 }
+                                #endregion
+                                #endregion
+
                             }
-                            #endregion
-                            #endregion
 
                         }
-
+                        #endregion
                     }
-                    #endregion  
+
+
                 }
+                #endregion
+                #endregion
 
 
+                #region Save Smi
+                var smiModelList = productSetupModelObject.SmiList;
+                var smiEntityList = ProductSetupMapper.SmiModelListToSmiEntityList(smiModelList);
+                smiEntityList = SmiRepositoryObject.InsertMany(smiEntityList);
+                foreach (var smiModel in smiModelList)
+                {
+                    var smiPropertyList = smiModel.PropertyList;
+                    var smiEntity = smiEntityList.FirstOrDefault(s => s.Code == smiModel.Code);
+                    if (smiEntity != null)
+                    {
+                        foreach (var smiProperty in smiPropertyList)
+                        {
+                            var propertyEntity = allPropertyEntityList.FirstOrDefault(p => p.Code == smiProperty.Code);
+                            if (propertyEntity != null)
+                            {
+                                propertyEntity.Value = smiProperty.Value;
+                                SmiRepositoryObject.LinkSmiToProperty(smiEntity, propertyEntity);
+                            }
+                        }
+                    }
+
+                }
+                #endregion
+
+                #region Save File Info
+                ProductSetupFileEntity productSetupFileEntity = ProductSetupMapper.ProductSetupFileModelToProductSetupFileEntity(productSetupFileModel);
+                List<ProductSetupFileEntity> previousFileSetup = ProductSetupFileRepositoryObject.SelectAll();
+                if (previousFileSetup.Count == 0)
+                {
+                    productSetupFileEntity.Version = 1;
+                }
+                else
+                {
+                    int lastVersion = previousFileSetup.Max(f => f.Version);
+                    productSetupFileEntity.Version = lastVersion + 1;
+                }
+                ProductSetupFileRepositoryObject.Insert(productSetupFileEntity);
+                #endregion
+                return errorList;
             }
-            #endregion
-            #endregion
-            return errorList;
+            catch (Exception e)
+            {
+                List<ProductSetupFileEntity> previousFileSetup = ProductSetupFileRepositoryObject.SelectAll();
+                int lastVersion = previousFileSetup.Max(f => f.Version);
+
+                Rollback(lastVersion);
+                throw;
+            }
+           
         }
 
         //todo: needs documentation
@@ -1343,8 +1405,83 @@ namespace JIC.Business.ProductSetup.Manager
                 });
                 return errorList;
             }
+
+            List<ProductSetupFileEntity> previousFileSetupList = ProductSetupFileRepositoryObject.SelectAll();
+            ProductSetupFileEntity rollbackProductSetupFileEntity = previousFileSetupList.FirstOrDefault(pf => pf.Version == version);
+            if (rollbackProductSetupFileEntity != null)
+            {
+                ProductSetupFileModel productSetupFileModel = ProductSetupMapper.ProductSetupFileEntityToProductSetupFileModel(rollbackProductSetupFileEntity);
+                SaveFile(productSetupFileModel);
+            }
+            else
+            {
+                errorList.Add(new ErrorModel()
+                {
+                    Type = ErrorType.ValidationError,
+                    Message = "version not found"
+                });
+                return errorList;
+            }
             return errorList;
         }
+        public ProductSetupFileModel GetLatestFile()
+        {
+            List<ProductSetupFileEntity> previousFileSetupList = ProductSetupFileRepositoryObject.SelectAll();
+            ProductSetupFileEntity rollbackProductSetupFileEntity = previousFileSetupList.OrderByDescending(pf => pf.Version).FirstOrDefault();
+            if (rollbackProductSetupFileEntity != null)
+            {
+                ProductSetupFileModel productSetupFileModel = ProductSetupMapper.ProductSetupFileEntityToProductSetupFileModel(rollbackProductSetupFileEntity);
+                return productSetupFileModel;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public List<ProductSetupFileModel> GetPreviousVersion(int numberOfVersions)
+        {
+            List<ProductSetupFileModel> topNModel = new List<ProductSetupFileModel>();
+
+            List<ProductSetupFileEntity> previousFileSetupList = ProductSetupFileRepositoryObject.SelectAll();
+            ProductSetupFileEntity latestProductSetupFileEntity = previousFileSetupList.OrderByDescending(pf => pf.Version).FirstOrDefault();
+            List<ProductSetupFileEntity> previousProductSetupFileVersion = previousFileSetupList.OrderByDescending(pf => pf.Version).ToList();
+
+            if (latestProductSetupFileEntity != null)
+            {
+                List<ProductSetupFileEntity> topNEntity = new List<ProductSetupFileEntity>();
+                if (numberOfVersions < previousProductSetupFileVersion.Count)
+                {
+                    for (int i = 0; i < numberOfVersions; i++)
+                    {
+                        if (previousProductSetupFileVersion[i].Version != latestProductSetupFileEntity.Version)
+                        {
+                            topNEntity.Add(previousProductSetupFileVersion[i]);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < previousProductSetupFileVersion.Count; i++)
+                    {
+                        if (previousProductSetupFileVersion[i].Version != latestProductSetupFileEntity.Version)
+                        {
+                            topNEntity.Add(previousProductSetupFileVersion[i]);
+                        }
+                    }
+                }
+                topNModel = ProductSetupMapper.ProductSetupFileEntityListToProductSetupFileModelList(topNEntity);
+                return topNModel;
+            }
+            else
+            {
+                return topNModel;
+            }
+
+        }
+
+
         #endregion
     }
 }

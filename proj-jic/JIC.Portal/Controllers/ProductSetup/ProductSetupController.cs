@@ -1,6 +1,7 @@
 ﻿using JIC.Business.Model;
 using JIC.Business.ProductSetup.Manager;
 using JIC.Business.ProductSetup.Model;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,15 +121,88 @@ namespace JIC.Portal.Controllers.ProductSetup
             }
         }
 
-
-        [HttpPost]
-        [ActionName("Rollback")]
-        public HttpResponseMessage Rollback(ProductSetupFileModel productSetupFileModel)
+        [HttpGet]
+        [ActionName("Get")]
+        public HttpResponseMessage Get()
         {
             try
             {
                 var response = new HttpResponseMessage();
-                List<ErrorModel> errorList = productSetupManager.Rollback(productSetupFileModel.Version);
+                ProductSetupFileModel productSetupFileModel = productSetupManager.GetLatestFile();
+                response = Request.CreateResponse(
+                                  HttpStatusCode.OK, new ResponseModel()
+                                  {
+                                      Status = HttpStatusCode.OK.ToString(),
+                                      Message = "",
+                                      Data = productSetupFileModel
+                                  });
+                return response;
+            }
+            catch (Exception e)
+            {
+
+                var response = new HttpResponseMessage();
+                var error = new ErrorModel() { Type = e.GetType().ToString(), Message = e.Message };
+                List<ErrorModel> errorList = new List<ErrorModel>();
+                errorList.Add(error);
+                response = Request.CreateResponse(
+                     HttpStatusCode.InternalServerError,
+                     new ResponseModel()
+                     {
+                         Status = HttpStatusCode.InternalServerError.ToString(),
+                         Message = "Please Check Errors Section",
+                         Errors = errorList
+                     });
+                return response;
+            }
+        }
+
+        [HttpGet]
+        [ActionName("GetPreviousVersionList")]
+        public HttpResponseMessage GetPreviousVersionList()
+        {
+            try
+            {
+                var response = new HttpResponseMessage();
+                List<ProductSetupFileModel> productSetupFileModel = productSetupManager.GetPreviousVersion(10);
+                response = Request.CreateResponse(
+                                  HttpStatusCode.OK, new ResponseModel()
+                                  {
+                                      Status = HttpStatusCode.OK.ToString(),
+                                      Message = "",
+                                      Data = productSetupFileModel
+                                  });
+                return response;
+            }
+            catch (Exception e)
+            {
+
+                var response = new HttpResponseMessage();
+                var error = new ErrorModel() { Type = e.GetType().ToString(), Message = e.Message };
+                List<ErrorModel> errorList = new List<ErrorModel>();
+                errorList.Add(error);
+                response = Request.CreateResponse(
+                     HttpStatusCode.InternalServerError,
+                     new ResponseModel()
+                     {
+                         Status = HttpStatusCode.InternalServerError.ToString(),
+                         Message = "Please Check Errors Section",
+                         Errors = errorList
+                     });
+                return response;
+            }
+        }
+
+        [HttpPost]
+        [ActionName("Rollback")]
+        public HttpResponseMessage Rollback([FromBody]JObject rollbackPayload)
+        {
+            try
+            {
+                var response = new HttpResponseMessage();
+
+                string versionNumber = rollbackPayload["version"].ToString();
+                List<ErrorModel> errorList = productSetupManager.Rollback(Convert.ToInt32(versionNumber));
                 if (errorList.Count > 0)
                 {
                     response = Request.CreateResponse(

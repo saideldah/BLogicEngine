@@ -78,10 +78,11 @@
     <Compile Include="ProductSetup\Entity\ProductSetupFileEntity.cs" />
     <Compile Include="ProductSetup\Entity\PropertyEntity.cs" />
     <Compile Include="ProductSetup\Entity\SmiEntity.cs" />
-    <Compile Include="ProductSetup\ProductSetupDataBase.cs" />
-    <Compile Include="ProductSetup\Repository\CoverMappingRepository.cs" />
+    <Compile Include="ProductSetupDataBase.cs" />
+    <Compile Include="ProductSetup\Repository\SmiRepository.cs" />
+    <Compile Include="ProductSetup\Repository\ProductMappingRepository.cs" />
     <Compile Include="ProductSetup\Repository\CoverRepository.cs" />
-    <Compile Include="ProductSetup\Repository\ProductSetupRepository.cs" />
+    <Compile Include="ProductSetup\Repository\ProductSetupFileRepository.cs" />
     <Compile Include="ProductSetup\Repository\LineOfBusinessGroupRepository.cs" />
     <Compile Include="ProductSetup\Repository\LineOfBusinessRepository.cs" />
     <Compile Include="ProductSetup\Repository\PackageRepository.cs" />

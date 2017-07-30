@@ -10,7 +10,11 @@
 <div class="container customer-form">
     <form class="form-vertical" name="productSetupForm" data-atom-form>
         <h1>Product Setup</h1>
-
+        <p>
+            Version Number: {{currentProductSetupFile.Version}}
+            <br />
+            Created Date: {{currentProductSetupFile.CreatedDate}}
+        </p>
         <p>In order to update the products and packages, download the latest committed excel file(s), then modify them while maintaining the same generated name(s) of the file(s). Finally, upload the modified file(s) and save your changes.</p>
 
         <div class="alert alert-info">
@@ -24,7 +28,7 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-4">
-                        <a ng-href="/api/SetupFile/Get?type=product" class="btn btn-default btn-block"><span class="glyphicon glyphicon-download-alt"></span> Download Latest Product Setup</a>
+                        <a ng-href="{{productSetupFileUrl}}" class="btn btn-default btn-block" ng-hide="hideDownloadButton"><span class="glyphicon glyphicon-download-alt"></span> Download Latest Product Setup</a>
                     </div>
                     <div class="col-sm-8">
                         <library-uploader app="'Library'" oninitialized="onPackageSetupUploaderInit" uniquenames="true"
@@ -66,8 +70,18 @@
                 </ul>
             </div>
         </div>
-
-        <div class="row actions">
+        <div class="row top-buffer">
+            <div class="col-xs-4">
+                <button id="btnPostFile" class="btn btn-primary col-xs-12" ng-click="save()" ng-disabled="!userHasUploadedDocument">Save</button>
+            </div>
+            <div class="col-xs-4">
+                <button id="btnPostFile" class="btn btn-warning col-xs-12" ng-click="rollback()" ng-show="showRollbackBtn">Rollback</button>
+            </div>
+            <div class="col-xs-4">
+                <button id="btnPostFile" class="btn btn-danger col-xs-12" ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+        <!--<div class="row actions">
             <div class="col-md-3">
                 <atom type="'button'" name="Submit" actiontype="'submit'" action="save" enabled="userHasUploadedDocument && !IsErrored && IsRulesDefined"
                       actionclasses="btn btn-primary btn-block" container="productSetupForm"></atom>
@@ -79,9 +93,9 @@
             </div>
 
             <div class="col-md-3">
-                <atom type="'button'" name="Cancel" actiontype="'default'" action="goBack" actionclasses="btn btn-default btn-block"></atom>
+                <atom type="'button'" name="Cancel" actiontype="'default'" action="cancel" actionclasses="btn btn-default btn-block"></atom>
             </div>
-        </div>
+        </div>-->
 
     </form>
 </div>

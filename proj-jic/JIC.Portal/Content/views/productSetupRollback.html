@@ -1,0 +1,63 @@
+﻿<style>
+    .top-buffer {
+        margin-top: 10px;
+    }
+
+    th {
+        font-weight: normal;
+        font-size: 80%;
+        text-transform: uppercase;
+        background-color: #dedeff !important;
+    }
+
+    tbody {
+        font-size: 80%;
+    }
+
+    .table > tbody > tr:nth-child(even) {
+        background-color: #f5f5f5;
+    }
+
+    .scroll-area {
+        height: 200px;
+        overflow-y: scroll;
+    }
+</style>
+
+<div class="container customer-form">
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Current Version Number: {{currentFile.Version}}</h4>
+        </div>
+    </div>
+    <!--Parent Domain-->
+    <div class="row top-buffer">
+        <div class="col-md-4">
+            <label for="PreviousVersionNumber">Previous Version Number</label>
+            <select class="form-control" id="PreviousVersionNumber" name="PreviousVersionNumber"
+                    ng-model="selectedVersion" ng-change="changeDownloadUrl()">
+                <option value="{{file.Version}}" ng-repeat="file in previousVersionFileList">{{file.Version}}  ({{file.CreatedDate}})</option>
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="row top-buffer">
+        <div class="col-md-6">
+            <div class="form-group">
+
+                <a ng-href="{{productSetupFileUrl}}" target="_blank" class="btn btn-default" style="color: #333333;">
+                    <li class="glyphicon glyphicon-download-alt"></li>
+                    Download Product Setup Version ({{selectedVersion}})
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <!--Buttons-->
+    <div class="row top-buffer">
+        <div class="col-md-12">
+            <button id="btnPostFile" class="btn btn-primary" ng-click="submit()">Submit</button>
+            <button id="btnPostFile" class="btn btn-danger" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</div>

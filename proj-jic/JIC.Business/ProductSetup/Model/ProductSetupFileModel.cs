@@ -15,6 +15,7 @@ namespace JIC.Business.ProductSetup.Model
         public string UploadedFileName { get; set; }
         public string OriginFileName { get; set; }
         public string FileType { get; set; }
+        public string CreatedDate { get; set; }
         public int Version { get; set; }
     }
 }

@@ -207,6 +207,8 @@ namespace JIC.Business.ProductSetup.Utility
             ProductMappingEntityObject.MappingRule = ProductMappingModelObject.MappingRule;
             ProductMappingEntityObject.CodeBack = ProductMappingModelObject.CodeBack;
             ProductMappingEntityObject.ProductId = relatedProductId;
+            ProductMappingEntityObject.Status = ProductMappingModelObject.Status;
+
 
 
             return ProductMappingEntityObject;
@@ -226,6 +228,47 @@ namespace JIC.Business.ProductSetup.Utility
             }
             return ProductMappingEntityObjectList;
         }
+
+
+        public static SmiEntity SmiModelToSmiEntity(SmiModel SmiModelObject)
+        {
+            SmiEntity SmiEntityObject = new SmiEntity();
+            SmiEntityObject.Code = SmiModelObject.Code;
+            SmiEntityObject.Title = SmiModelObject.Title;
+            SmiEntityObject.RetrievedFromBank = SmiModelObject.RetrievedFromBank;
+            SmiEntityObject.FieldControlOnScreen = SmiModelObject.FieldControlOnScreen;
+            SmiEntityObject.Description = SmiModelObject.Description;
+            return SmiEntityObject;
+        }
+
+        /// <summary>
+        /// Map SmiModel List To SmiEntity List
+        /// </summary>
+        /// <param name="SmiModelObjectList"></param>
+        /// <returns></returns>
+        public static List<SmiEntity> SmiModelListToSmiEntityList(List<SmiModel> SmiModelObjectList)
+        {
+            List<SmiEntity> SmiEntityObjectList = new List<SmiEntity>();
+            foreach (var SmiModelObject in SmiModelObjectList)
+            {
+                SmiEntityObjectList.Add(SmiModelToSmiEntity(SmiModelObject));
+            }
+            return SmiEntityObjectList;
+        }
+
+        public static ProductSetupFileEntity ProductSetupFileModelToProductSetupFileEntity(ProductSetupFileModel productSetupFileModel)
+        {
+            ProductSetupFileEntity productSetupFileEntity = new ProductSetupFileEntity();
+            productSetupFileEntity.LibraryName = productSetupFileModel.LibraryName;
+            productSetupFileEntity.FolderPath = productSetupFileModel.FolderPath;
+            productSetupFileEntity.OriginFileName = productSetupFileModel.OriginFileName;
+            productSetupFileEntity.UploadedFileName = productSetupFileModel.UploadedFileName;
+            productSetupFileEntity.FilePath = productSetupFileModel.FilePath;
+            productSetupFileEntity.FileType = productSetupFileModel.FileType;
+            productSetupFileEntity.Version = productSetupFileModel.Version;
+            return productSetupFileEntity;
+        }
+
         #endregion
 
         #region Entity To Model
@@ -407,6 +450,56 @@ namespace JIC.Business.ProductSetup.Utility
                 CoverModelObjectList.Add(CoverEntityToCoverModel(CoverEntityObject));
             }
             return CoverModelObjectList;
+        }
+        public static SmiModel SmiEntityToSmiModel(SmiEntity SmiEntityObject)
+        {
+            SmiModel SmiModelObject = new SmiModel();
+            SmiModelObject.Code = SmiEntityObject.Code;
+            SmiModelObject.Title = SmiEntityObject.Title;
+            SmiModelObject.RetrievedFromBank = SmiEntityObject.RetrievedFromBank;
+            SmiModelObject.FieldControlOnScreen = SmiEntityObject.FieldControlOnScreen;
+            SmiModelObject.Description = SmiEntityObject.Description;
+            return SmiModelObject;
+        }
+
+        /// <summary>
+        /// Map SmiModel List To SmiEntity List
+        /// </summary>
+        /// <param name="SmiModelObjectList"></param>
+        /// <returns></returns>
+        public static List<SmiModel> SmiEntityListToSmiModelList(List<SmiEntity> SmiEntityObjectList)
+        {
+            List<SmiModel> SmiModelObjectList = new List<SmiModel>();
+            foreach (var SmiEntityObject in SmiEntityObjectList)
+            {
+                SmiModelObjectList.Add(SmiEntityToSmiModel(SmiEntityObject));
+            }
+            return SmiModelObjectList;
+        }
+
+
+        public static ProductSetupFileModel ProductSetupFileEntityToProductSetupFileModel(ProductSetupFileEntity productSetupFileEntity )
+        {
+            ProductSetupFileModel productSetupFileModel = new ProductSetupFileModel();
+            productSetupFileModel.Id = productSetupFileEntity.Id.ToString();
+            productSetupFileModel.LibraryName = productSetupFileEntity.LibraryName;
+            productSetupFileModel.FolderPath = productSetupFileEntity.FolderPath;
+            productSetupFileModel.OriginFileName = productSetupFileEntity.OriginFileName;
+            productSetupFileModel.UploadedFileName = productSetupFileEntity.UploadedFileName;
+            productSetupFileModel.FilePath = productSetupFileEntity.FilePath;
+            productSetupFileModel.FileType = productSetupFileEntity.FileType;
+            productSetupFileModel.CreatedDate = productSetupFileEntity.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss");
+            productSetupFileModel.Version = productSetupFileEntity.Version;
+            return productSetupFileModel;
+        }
+        public static List<ProductSetupFileModel> ProductSetupFileEntityListToProductSetupFileModelList(List<ProductSetupFileEntity> productSetupFileEntityList)
+        {
+            List<ProductSetupFileModel> productSetupFileModelList = new List<ProductSetupFileModel>();
+            foreach (var productSetupFileEntity in productSetupFileEntityList)
+            {
+                productSetupFileModelList.Add(ProductSetupFileEntityToProductSetupFileModel(productSetupFileEntity));
+            }
+            return productSetupFileModelList;
         }
 
         #endregion

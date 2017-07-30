@@ -442,6 +442,7 @@
     <Content Include="Content\js\companySpecificConfiguration.js" />
     <Content Include="Content\js\controllers\indexController.js" />
     <Content Include="Content\js\controllers\productSetupController.js" />
+    <Content Include="Content\js\controllers\productSetupRollbackController.js" />
     <Content Include="Content\js\directives\beneficiaryClausesDirective.js" />
     <Content Include="Content\js\directives\pendingProposalListDirective.js" />
     <Content Include="Content\js\directives\jicBusinessFilterDirective.js" />
@@ -477,6 +478,7 @@
     <Content Include="Content\themes\default\styles\styles.css" />
     <Content Include="Content\views\index.html" />
     <Content Include="Content\views\productSetup.html" />
+    <Content Include="Content\views\productSetupRollback.html" />
     <Content Include="Controllers\ProductSetup\SqlScript\ProductSetupDatabaseModel.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
