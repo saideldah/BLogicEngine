@@ -1,0 +1,10 @@
+﻿<div class="col-sm-4 col-md-3 col-lg-2 cell-cointainer">
+    <div class="inline-cell">
+        <span class='cell-icon-preview' ng-click='toggleItemSelection($index, item)'
+              ng-class="{'cell-icon-clicked': item.IsSelected}"></span>
+        <div ng-click='itemClicked($index, item)'>
+            <div ng-bind='item.Title'></div>
+            <h3>TEST</h3>
+        </div>
+    </div>
+</div>

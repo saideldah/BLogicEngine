@@ -1,0 +1,17 @@
+﻿<form name="myForm" id="myForm" data-atom-form="">
+    <div class="col-md-3">
+        <atom type="'text'" name="resources.FirstName" withlabel="true" datavalue="model.FirstName"></atom>
+    </div>
+    <div class="col-md-3">
+        <atom type="'text'" name="resources.LastName" withlabel="true" datavalue="model.LastName"></atom>
+    </div>
+    <div class="col-md-3">
+        <atom type="'text'" name="resources.Username" withlabel="true" datavalue="model.Username"></atom>
+    </div>
+    <div class="col-md-2">
+        <atom type="'text'" restricttonumbers="true" name="resources.AgentCode" withlabel="true" datavalue="model.AgentCode"></atom>
+    </div>
+    <div class="col-md-1 col-vertical-label-pad">
+        <atom type="'button'" actionclasses="btn btn-primary btn-block insert-fa-search" name="resources.Search" withlabel="false" processingname="''" actiontype="'filter'" action="filter" enabled="!formValidation(myForm.$invalid,!(model.FirstName || model.LastName || model.Username || model.AgentCode))" click-on-form-enter="true"></atom>
+    </div>
+</form>

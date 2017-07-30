@@ -1,0 +1,23 @@
+﻿<div class="sale_request_list">
+    <ams-list controller-url="serverController" correlation="clientId" name="'proposallist'" loader="loader">
+        <div>
+            <div>
+                <actions type="listActions" context="context"></actions>
+                <h2>{{::resources.Search}}</h2>
+                <div>
+                    <div class="inline_list">
+                        <list-filters></list-filters>
+                    </div>
+                    <list-refresh></list-refresh>
+                    <actions type="listItemActions" context="context"></actions>
+                </div>
+            </div>
+            <div>
+                <grid-items></grid-items>
+            </div>
+        </div>
+
+
+    </ams-list>
+
+</div>

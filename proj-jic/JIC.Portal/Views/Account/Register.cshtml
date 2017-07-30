@@ -1,0 +1,14 @@
+﻿<div ng-controller="RegisterController" id="registeration_page">
+    <h1>User Registeration</h1>
+    <form data-atom-form="" name="registerationForm">
+        <atom class="block_bsy" type="'text'" name="'First Name'" datavalue="user.FirstName" required="true"></atom>
+        <atom class="block_bsy" type="'text'" name="'Last Name'" datavalue="user.LastName" required="true"></atom>
+        <atom class="block_bsy" type="'text'" name="'Username'" datavalue="user.Username" required="true"></atom>
+        <atom class="block_bsy" type="'email'" name="'Email'" datavalue="user.Email" required="true"></atom>
+        <atom class="block_bsy" type="'password'" name="'Password'" datavalue="user.Password" required="true"></atom>
+        <atom class="block_bsy" type="'password'" name="'Confirm Password'" datavalue="user.ConfirmPassword" required="true"></atom>
+        <atom class="block_bsy" type="'date'" name="'Date Of Birth'" datavalue="user.DateOfBirth" required="false"></atom>
+        <atom class="block_bsy" type="'attachment'" name="'Profile Image'" datavalue="user.ImageUrl" required="false"></atom>
+        <atom class="block_bsy" type="'button'" name="'Submit'" actiontype="'submit'" action="submit"></atom>
+    </form>
+</div>

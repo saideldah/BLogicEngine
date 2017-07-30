@@ -1,0 +1,1216 @@
+﻿@using SogeCap.Common
+@using EBranch.Strategy.SogeCap;
+@using System.Web.Mvc;
+@using SogeCap.Portal.Models;
+
+
+
+@if(Model.Browser == "Firefox" || Model.Browser == "Chrome" ){
+<style type="text/css">
+    @@media print {
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .active {
+            visibility: visible !important;
+            display: inline-block !important;
+        }
+
+        .inactive {
+            visibility: hidden !important;
+            display: none !important;
+        }
+
+        table {
+            margin-left: 4em;
+        }
+
+        .table_without_margin {
+            margin-left: 0;
+        }
+
+        td:nth-child(1) {
+            width: 12cm;
+        }
+
+        td:nth-child(2) {
+            width: 8cm;
+        }
+
+        td:nth-child(3) {
+            width: 6cm;
+        }
+
+        .apply-left-margin {
+            margin-left: 2em;
+        }
+
+        #page-wrapper,
+        .modal,
+        .modal-backdrop,
+        .modal-content,
+        #page-content {
+            visibility: hidden;
+            display: none;
+        }
+
+        .field {
+            font-family: "Courier New", monospace;
+            font-size: 12px;
+            position: absolute;
+        }
+
+        .page-break {
+            /*page-break-after: always;*/
+        }
+
+        .page {
+            height: 100%;
+            width: 100%;
+            top: -1.29cm;
+            position: relative;
+            display: inline-block;
+        }
+
+        .wrap-content {
+            display: table;
+            height: 0.7cm;
+        }
+
+            .wrap-content p {
+                line-height: 70%;
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+        #personal-name {
+            width: 6cm;
+            left: 4.509cm;
+            top: 3.2cm;
+        }
+
+        #personal-titre {
+            left: 4.008cm;
+            top: 3.8cm;
+        }
+
+        #personal-prenomdu-pere {
+            left: 23.046cm;
+            top: 3.3cm;
+        }
+
+        #personal-datedenaissance {
+            left: 19.706cm;
+            top: 3.75cm;
+        }
+
+        #taille {
+            left: 2.004cm;
+            top: 4.15cm;
+        }
+
+        #poids {
+            left: 15.03cm;
+            top: 4.15cm;
+        }
+
+        #nombre-de-cigarettes {
+            left: 7.682cm;
+            top: 4.55cm;
+        }
+
+        #nombre-de-verres-alcool {
+            left: 21.71cm;
+            top: 4.55cm;
+        }
+
+        #first-question {
+            left: 0;
+            top: 7.6cm;
+        }
+
+        #second-question {
+            left: 0;
+            top: 10cm;
+        }
+
+        #third-question {
+            left: 0;
+            top: 12.4cm;
+        }
+
+        #fourth-question {
+            left: 0;
+            top: 15.5cm;
+        }
+
+        #fifth-question {
+            left: 0;
+            top: 19.4cm;
+        }
+
+        #sixth-question {
+            left: 0;
+            top: 23cm;
+        }
+
+        #seventh-question {
+            left: 0;
+            top: 25.5cm;
+        }
+        #proposal-bo-product-code {
+            left: 0;
+            top: 1.7cm;
+        }
+
+        #proposal-bo-product-description {
+            right: 1.5cm;
+            top: 1.6cm;
+        }
+
+        #bo-product-code {
+            left: 6.5cm;
+            top: 2.9cm;
+        }
+        
+        #barcode {
+            left: 3.5cm;
+            top: 1.7cm;
+        }
+
+        #bo-product-description {
+            right: 5.3cm;
+            top: 2.9cm;
+        }
+
+        #legal-field {
+            right: 1cm;
+            top: 1.6cm;
+            font-size: 8px !important;
+        }
+
+        #is-draft {
+            top: 1.65cm;
+            left: 13.5cm;
+        }
+
+        #beneficiare {
+            left: 0.7cm;
+            top: 16cm;
+            right: 1.3cm;
+        }
+
+        #personal-situation {
+            left: 4.843cm;
+            top: 4.1cm;
+        }
+
+        #personal-immeuble {
+            left: 3.173cm;
+            top: 4.58cm;
+        }
+
+        #personal-localite {
+            left: 2.505cm;
+            top: 5.1cm;
+        }
+
+        #personal-pays {
+            left: 1.837cm;
+            top: 5.5cm;
+        }
+
+        #personal-telephone {
+            left: 15.698cm;
+            top: 5.4cm;
+        }
+
+        #personal-fax {
+            left: 24.048cm;
+            top: 5.4cm;
+        }
+
+        #personal-biote-postale {
+            left: 16.366cm;
+            top: 4.95cm;
+        }
+
+        #personal-rue {
+            width: 7cm;
+            left: 16.366cm;
+            top: 4.5cm;
+        }
+
+        #personal-nationalite {
+            left: 16.366cm;
+            top: 4.15cm;
+        }
+
+
+        #personal-boite-postale {
+            left: 16.366cm;
+            top: 5cm;
+        }
+
+        #profession-profession {
+            left: 3.006cm;
+            top: 6.3cm;
+        }
+
+        #profession-nomde-employeur {
+            left: 6.845cm;
+            top: 6.7cm;
+        }
+
+        #profession-localite {
+            left: 2.672cm;
+            top: 7.53cm;
+        }
+
+        #profession-pays {
+            left: 1.837cm;
+            top: 8cm;
+        }
+
+        #profession-rue {
+            width: 7cm;
+            left: 16.032cm;
+            top: 7cm;
+        }
+
+        #profession-address {
+            left: 7.348cm;
+            top: 8.35cm;
+        }
+
+        #profession-telephone {
+            left: 15.698cm;
+            top: 8cm;
+        }
+
+        #profession-fax {
+            left: 24.048cm;
+            top: 8cm;
+        }
+
+        #profession-boite-postale {
+            left: 16.366cm;
+            top: 7.6cm;
+        }
+
+        #profession-immeuble {
+            left: 3.006cm;
+            top: 7.15cm;
+        }
+
+        #compte {
+            left: 16.533cm;
+            top: 9.25cm;
+        }
+
+        #agence {
+            left: 2.505cm;
+            top: 9.24cm;
+        }
+
+        #apporteur-daffaire-nom {
+            left: 9.185cm;
+            top: 10.14cm;
+        }
+
+        #apporteur-daffaire-prenom {
+            left: 17.702cm;
+            top: 10.14cm;
+        }
+
+        #apporteur-daffaire-matricule {
+            left: 22.211cm;
+            top: 10.14cm;
+        }
+
+        #charge-declientele-nom {
+            left: 9.185cm;
+            top: 9.65cm;
+        }
+
+        #charge-declientele-prenom {
+            left: 17.702cm;
+            top: 9.65cm;
+        }
+
+        #charge-declientele-matricule {
+            left: 22.044cm;
+            top: 9.65cm;
+        }
+
+        #date-deffet {
+            left: 8cm;
+            top: 19.85cm;
+        }
+
+        #duree-ducontract {
+            left: 6.68cm;
+            top: 20.3cm;
+        }
+
+        #periodicte-depaiement {
+            left: 9.185cm;
+            top: 20.74cm;
+        }
+
+        #montant-delaprime {
+            left: 12.525cm;
+            top: 21.2cm;
+        }
+
+        #duree-depaiement {
+            left: 10.02cm;
+            top: 21.5cm;
+        }
+
+        #indexation {
+            left: 17.535cm;
+            top: 20.72cm;
+        }
+
+        #initial-payment {
+            left: 12cm;
+            top: 19.85cm;
+        }
+
+        #eighth-question {
+            left: 0;
+            top: 4.1cm;
+        }
+
+        #ninth-question {
+            left: 0;
+            top: 6.5cm;
+        }
+
+        #tenth-question {
+            left: 0;
+            top: 9.15cm;
+        }
+
+        #elevnth-question {
+            left: 0;
+            top: 11.2cm;
+        }
+
+        #twelfth-question {
+            left: 0;
+            top: 13.2cm;
+        }
+
+        #declaration-taille {
+            left: 4cm;
+            top: 13.45cm;
+        }
+
+        #declaration-poids {
+            left: 4cm;
+            top: 13.82cm;
+        }
+
+        #reference {
+            left: 10.2cm;
+            top: 2.4cm;
+            width: 3.8cm;
+            text-align: center;
+        }
+
+        #covers {
+            left: 0;
+            top: 11.3cm;
+            right: 1.3cm;
+        }
+    }
+</style>
+}
+
+@if(Model.Browser == "InternetExplorer"){
+<style type="text/css">
+    @@media print { 
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .active {
+            visibility: visible !important;
+            display: inline-block !important;
+        }
+
+        .inactive {
+            visibility: hidden !important;
+            display: none !important;
+        }
+
+        table {
+            margin-left: 4em;
+        }
+
+        .table_without_margin {
+            margin-left: 0;
+        }
+
+        td:nth-child(1) {
+            width: 12cm;
+        }
+
+        td:nth-child(2) {
+            width: 8cm;
+        }
+
+        td:nth-child(3) {
+            width: 6cm;
+        }
+
+        .apply-left-margin {
+            margin-left: 2em;
+        }
+
+        #page-wrapper,
+        .modal,
+        .modal-backdrop,
+        .modal-content,
+        #page-content {
+            visibility: hidden;
+            display: none;
+        }
+
+        .field {
+            font-family: "Courier New", monospace;
+            font-size: 12px;
+            position: absolute;
+        }
+
+        .page-break {
+            /*page-break-after: always;*/
+        }
+
+        .page {
+            height: 100%;
+            width: 100%;
+            top: -1.29cm;
+            position: relative;
+            display: inline-block;
+        }
+
+        .wrap-content {
+            display: table;
+            height: 0.7cm;
+        }
+
+            .wrap-content p {
+                line-height: 70%;
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+        #personal-name {
+            width: 6cm;
+            left: 2.8009cm;
+            top: 2.6cm;
+        }
+
+        #personal-titre {
+            left: 2.708cm;
+            top: 3.1cm;
+        }
+
+        #personal-prenomdu-pere {
+            left: 14.546cm;
+            top: 2.7cm;
+        }
+        #barcode {
+            left: 3.5cm;
+            top: 2.2cm;
+        }
+
+        #personal-datedenaissance {
+            left: 11.706cm;
+            top: 3.2cm;
+        }
+
+        #taille {
+            left: 2.004cm;
+            top: 4.15cm;
+        }
+
+        #poids {
+            left: 15.03cm;
+            top: 4.15cm;
+        }
+
+        #nombre-de-cigarettes {
+            left: 7.682cm;
+            top: 4.55cm;
+        }
+
+        #nombre-de-verres-alcool {
+            left: 21.71cm;
+            top: 4.55cm;
+        }
+
+        #first-question {
+            left: 0;
+            top: 7.6cm;
+        }
+
+        #second-question {
+            left: 0;
+            top: 10cm;
+        }
+
+        #third-question {
+            left: 0;
+            top: 12.4cm;
+        }
+
+        #fourth-question {
+            left: 0;
+            top: 15.5cm;
+        }
+
+        #fifth-question {
+            left: 0;
+            top: 19.4cm;
+        }
+
+        #sixth-question {
+            left: 0;
+            top: 23cm;
+        }
+
+        #seventh-question {
+            left: 0;
+            top: 25.5cm;
+        }
+
+        #proposal-bo-product-code {
+            left: 0;
+            top: 1.1cm;
+        }
+
+        #proposal-bo-product-description {
+            right: 1.5cm;
+            top: 1.1cm;
+        }
+
+         #bo-product-code {
+            left: 6.5cm;
+            top: 2.9cm;
+        }
+    
+        #bo-product-description {
+            right: 4.0cm;
+            top: 2.1cm;
+        }
+         #reference {
+            left: 15.2cm;
+            top: 2.1cm;
+            width: 3.8cm;
+            text-align: center;
+        }
+
+        #legal-field {
+            right: 1cm;
+            top: 1.6cm;
+            font-size: 8px !important;
+        }
+
+        #is-draft {
+            top: 1.65cm;
+            left: 13.5cm;
+        }
+
+        #beneficiare {
+            left: 0.7cm;
+            top: 15.7cm;
+            right: 1.3cm;
+        }
+
+        #personal-situation {
+            left: 2.71943cm;
+            top: 3.6cm;
+        }
+
+        #personal-immeuble {
+            left: 2.773cm;
+            top: 3.898cm;
+        }
+
+        #personal-localite {
+            left: 1.45cm;
+            top: 4.35cm;
+        }
+
+        #personal-pays {
+            left: 1.037cm;
+            top: 4.79cm;
+        }
+
+        #personal-telephone {
+            left: 15.698cm;
+            top: 5.4cm;
+        }
+
+        #personal-fax {
+            left: 24.048cm;
+            top: 5.4cm;
+        }
+
+        #personal-biote-postale {
+            left: 16.366cm;
+            top: 4.95cm;
+        }
+
+        #personal-rue {
+            width: 7cm;
+            left: 9.266cm;
+            top: 3.83cm;
+        }
+
+        #personal-nationalite {
+            left: 9.266cm;
+            top: 3.55cm;
+        }
+
+
+        #personal-boite-postale {
+            left: 16.366cm;
+            top: 5cm;
+        }
+
+        #profession-profession {
+            left: 2.65cm;
+            top: 5.67cm;
+        }
+
+        #profession-nomde-employeur {
+            left: 6.845cm;
+            top: 5.7cm;
+        }
+
+        #profession-localite {
+            left: 1.172cm;
+            top: 6.88cm;
+        }
+
+        #profession-pays {
+            left: 0.8937cm;
+            top: 7.3cm;
+        }
+
+        #profession-rue {
+            width: 7cm;
+            left: 9.332cm;
+            top: 6.30cm;
+        }
+
+        #profession-address {
+            left: 4.648cm;
+            top: 7.81cm;
+        }
+
+        #profession-telephone {
+            left: 15.698cm;
+            top: 8cm;
+        }
+
+        #profession-fax {
+            left: 24.048cm;
+            top: 8cm;
+        }
+
+        #profession-boite-postale {
+            left: 16.366cm;
+            top: 7.6cm;
+        }
+
+        #profession-immeuble {
+            left: 3.006cm;
+            top: 7.15cm;
+        }
+
+        #compte {
+            left: 9.933cm;
+            top: 8.61cm;
+        }
+
+        #agence {
+            left: 2.205cm;
+            top: 8.61cm;
+        }
+
+        #apporteur-daffaire-nom {
+            left: 4.998cm;
+            top: 9.5cm;
+        }
+
+        #apporteur-daffaire-prenom {
+            left: 11.702cm;
+            top: 9.5cm;
+        }
+
+        #apporteur-daffaire-matricule {
+            left: 12.946cm;
+            top: 9.5cm;
+        }
+
+        #charge-declientele-nom {
+            left: 4.998cm;
+            top: 9.0cm;
+        }
+
+        #charge-declientele-prenom {
+            left: 11.702cm;
+            top: 9.0cm;
+        }
+
+        #charge-declientele-matricule {
+            left: 12.946cm;
+            top: 9.0cm;
+        }
+
+        #date-deffet {
+            left: 4.58cm;
+            top: 19.15cm;
+        }
+
+        #duree-ducontract {
+            left: 3.6cm;
+            top: 19.6cm;
+        }
+
+        #periodicte-depaiement {
+            left: 5.085cm;
+            top: 20.04cm;
+        }
+
+        #montant-delaprime {
+            left: 5.8725cm;
+            top: 20.403cm;
+        }
+
+        #duree-depaiement {
+            left: 5cm;
+            top: 20.946cm;
+        }
+
+        #indexation {
+            left: 9.935cm;
+            top: 20.04cm;
+        }
+
+        #initial-payment {
+            left: 6.7cm;
+            top: 19.15cm;
+        }
+
+        #eighth-question {
+            left: 0;
+            top: 4.1cm;
+        }
+
+        #ninth-question {
+            left: 0;
+            top: 6.5cm;
+        }
+
+        #tenth-question {
+            left: 0;
+            top: 9.15cm;
+        }
+
+        #elevnth-question {
+            left: 0;
+            top: 11.2cm;
+        }
+
+        #twelfth-question {
+            left: 0;
+            top: 13.2cm;
+        }
+
+        #declaration-taille {
+            left: 1.84cm;
+            top: 13.6081cm;
+        }
+
+        #declaration-poids {
+            left: 1.84cm;
+            top: 14.0082cm;
+        }   
+
+        #covers {
+            left: 0;
+            top: 10.83cm;
+            right: 1.3cm;
+        }
+    }
+</style>
+
+}
+
+<!--<div id="container" class="hidden">-->
+@{int x=1;}
+@for(var i = 0;i < x || (i <= x && Model.JointInsured != null);i++)
+{
+    if(i == 1)
+    {
+        Model.Client = Model.JointInsured;
+    }
+<div id="@String.Format("page-{0}",1 + (4 * i))" class="page hidden inactive">
+    <div id="personal-name" class="wrap-content field"><p>@Model.Client.LastName @Model.Client.FirstName</p></div>
+    @if(Model.Client.Title != null)
+    {
+    <div id="personal-titre" class="field">@Model.Client.Title.Title</div>
+
+    }
+    <div id="personal-situation" class="field">@Model.Client.MaritalStatusText</div>
+    <div id="personal-immeuble" class="field">@Model.Client.HomeAddress.Building</div>
+    <div id="personal-prenomdu-pere" class="field">@Model.Client.FatherName</div>
+    <div id="personal-localite" class="field">@Model.Client.HomeAddress.Region</div>
+    @if(Model.Client.HomeAddress.Country != null)
+    {
+    <div id="personal-pays" class="field">@Model.Client.HomeAddress.Country.Title</div>
+
+    }
+    <div id="personal-datedenaissance" class="field">@Model.Client.FormattedDateOfBirth</div>
+    @if(Model.Client.Nationality != null)
+    {
+    <div id="personal-nationalite" class="field">
+        @Model.Client.Nationality.Title
+    </div>
+    }
+
+    <div id="personal-rue" class="wrap-content field"><p>@Model.Client.HomeAddress.Street</p></div>
+    <div id="personal-boite-postale" class="field"></div>
+    <div id="profession-telephone" class="field">@Model.Client.HomeTelephoneNumber</div>
+    <div id="profession-boite-postale" class="field"></div>
+    <div id="personal-telephone" class="field">@Model.Client.HomeAddress.Telephone1</div>
+    <div id="personal-fax" class="field"></div>
+    <div id="personal-telephone" class="field">@Model.Client.HomeAddress.Telephone2</div>
+    <div id="personal-fax" class="field"></div>
+    <div id="profession-profession" class="field">@Model.Client.Profession.Title</div>
+    <div id="profession-nomde-employeur" class="field">@Model.Client.EmployerName</div>
+    <div id="profession-immeuble" class="field">@Model.Client.BusinessAddress.Building</div>
+    <div id="profession-localite" class="field">@Model.Client.BusinessAddress.Region</div>
+    @if(Model.Client.BusinessAddress.Country != null)
+    {
+    <div id="profession-pays" class="field">@Model.Client.BusinessAddress.Country.Title</div>
+    }
+    <div id="profession-rue" class="wrap-content field"><p>@Model.Client.BusinessAddress.Street</p></div>
+    <div id="profession-boite-postale" class="field"></div>
+    <div id="profession-telephone" class="field">@Model.Client.TelephoneNumber</div>
+    <div id="profession-boite-postale" class="field"></div>
+    <div id="profession-telephone" class="field">@Model.Client.BusinessAddress.Telephone1</div>
+    <div id="profession-boite-postale" class="field"></div>
+    <div id="profession-telephone" class="field">@Model.Client.BusinessAddress.Telephone2</div>
+    <div id="profession-boite-postale" class="field"></div>
+
+    <div id="profession-address" class="field">@(!String.IsNullOrEmpty(Model.Client.SelectedAddress) && Model.Client.SelectedAddress.StartsWith("Home") ? "Personnelle" : "Professionnelle")</div>
+    <div id="profession-fax" class="field"></div>
+    <div id="agence" class="field">@Model.Agency</div>
+    <div id="compte" class="field">@Model.Radical</div>
+    <div id="date-deffet" class="field">@Model.CreatedDate.ToString(SiteConstants.SogeCapDateFormat)</div>
+    @if(Model.IsInvestmentPlan && !Model.Package.InternalName.Equals("capeducationcapital"))
+    {
+    <div id="initial-payment" class="field">Versement Initial: @Model.FormattedDownPayment @Model.Currency</div>
+    }
+    <div id="duree-ducontract" class="field">@Model.Duration</div>
+    <div id="periodicte-depaiement" class="field">@Model.PaymentFrequency</div>
+    <div id="montant-delaprime" class="field">@Model.FormattedPrice</div>
+    @if(Model.IsInvestmentPlan)
+    {
+    <div id="indexation" class="field">Ind. @Model.Indexation.ToPriceString(2) %</div>
+    }
+    @if(!String.IsNullOrEmpty(Model.StatusName) && Model.StatusName.Equals("pending")){
+    <div id="is-draft" class="field">D</div>
+    }
+    <div id="proposal-bo-product-code" class="field">
+        @Model.ProductCode:@Model.ProposalNumber.SequenceNumber   @(Model.ShowStars ?
+
+        "***" : "")
+    </div>
+    @if(i == 0)
+    {
+    <div id="barcode" class="field"><img src="data:image/png;base64,@Model.Barcode" onerror="this.style.display='none'" /></div>
+    }
+    <div id="proposal-bo-product-description" class="field">@Model.ProductName</div>
+    @if(Model.PaymentDuration != 0)
+    {
+    <div id="duree-depaiement" class="field">@Model.PaymentDuration</div>
+    }
+    <div id="charge-declientele-nom" class="field">@Model.ChargePrenom</div>
+    <div id="charge-declientele-prenom" class="field"></div>
+    <div id="charge-declientele-matricule" class="field">@Model.ChargeCode</div>
+    <div id="apporteur-daffaire-nom" class="field">@Model.ApporteurPrenom</div>
+    <div id="apporteur-daffaire-prenom" class="field"></div>
+    <div id="apporteur-daffaire-matricule" class="field">@Model.ApporteurCode</div>
+    <div id="covers" class="field">
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template1"){
+        <span>Capital Garanti Décroissant: </span> <span> @Model.FormattedSumInsured </span><span> @Model.Currency </span><br>
+        <span>Garanties:</span><br>
+
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces suite Maladie/Accident", new TemplateSentenceCondition("DC"), new TemplateSentenceCondition("DA"), true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces / Acc avant age 75", new TemplateSentenceCondition("DA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.Acc age max 65 ans", new TemplateSentenceCondition("IPTA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces suite Maladie",new TemplateSentenceCondition(TemplateOperation.All, "DC", "DA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.TC.Age max 65 ans", new TemplateSentenceCondition("IPTC"), new TemplateSentenceCondition("DA"), true, true))
+        </table>
+        <br>
+        <p><span>Couvertures: Deces </span><span>@PrintoutHelperMethods.DisplaySentence(Model, "et Invalidite totale Permanente", new TemplateSentenceCondition(TemplateOperation.Or, "IPTC", "IPTA"),null, false) </span><span> suite accident ou maladie qui s'est declaree apres l'effet du contrat</span></p>
+        }
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template2"){
+        <span>Garanties :</span><br>
+
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces/Invalidite Perm. Tot. ou Par. Acc.", new TemplateSentenceCondition(TemplateOperation.All, "DA", "IPTA", "IPPA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces/Invalidite Perm. Tot. Toute Cause", new TemplateSentenceCondition(TemplateOperation.All, "DC", "IPTC"), null, true, true))
+        </table>
+        if(@Model.StrategyPlans != null){
+        <span>Strategies :</span><br>   
+        foreach (var Strategy in @Model.StrategyPlans)
+        {
+        <table>
+            @if(@Strategy.Value != 0){
+            <tr><td>@Strategy.Title</td><td><span>@Strategy.Value</span><span>%</span></td></tr>
+            }
+        </table>
+        }
+        }
+        }
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template3"){
+        <span>Garanties : (Maximales)</span>
+        <br>
+
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces / Acc avant age 75", new TemplateSentenceCondition("DA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces/maladie avant age 65", new TemplateSentenceCondition("DC"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.Acc avant age 65", new TemplateSentenceCondition("IPTA"), null, true, true))
+        </table>
+        <br>
+        <p><span>Je soussigne(e ) declare autoriser la SGBL a communiquer a SOGECAP LIBAN le releve des depenses effectuees sur mes cartes bancaires durant les 12 mois precedant tout eventuel sinistre.</span></p>
+        }
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template4"){
+        <span>Rente a l'origine:</span><span>@Model.FormattedSumInsuredWithStars </span><span> @Model.Currency </span><br>
+        <table class="table_without_margin">
+            <tr><td><span>Minimum </span><span> @Model.EducationMinValueParameter (@Model.FormattedBeneficiaryMinUnitValue)</span></td><td><span>Maximum </span><span> @Model.EducationMaxValueParameter (@Model.FormattedBeneficiaryMaxUnitValue)</span></td></tr>
+        </table>
+        <span>Option: </span><span> @Model.Beneficiary.SelectedOption</span>
+        <br>
+        <span>Garanties :</span>
+        <br>
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces suite Maladie/Accident", new TemplateSentenceCondition("DC"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.TC.Age max 65 ans", new TemplateSentenceCondition("IPTC"), null, true, true))
+        </table>
+        }
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template5"){
+        <span>Capital Garanti: </span>
+        <span>@Model.FormattedSumInsuredWithStars</span>
+        <span>@Model.Currency</span>
+        <br>
+        <span>Garanties :</span>
+        <br>
+
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces suite Maladie/Accident", new TemplateSentenceCondition("DC"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces Accidentel", new TemplateSentenceCondition("DA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Perm.Totale Accidentelle", new TemplateSentenceCondition("IPTA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Perm.Part.Accidentelle(%de)", new TemplateSentenceCondition("IPPA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.TC.Age max 65 ans", new TemplateSentenceCondition("IPTC"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "MALADIES REDOUTEES", new TemplateSentenceCondition("MR"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "RISQUE DE GUERRE DC", new TemplateSentenceCondition("RGDC"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "RISQUE DE GUERRE IPTC", new TemplateSentenceCondition("RGIN"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "GARANTIE DE RENOUVELLEMENT", new TemplateSentenceCondition("GRNV"), null, true, true))
+        </table>
+        }
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template6"){
+        <span>Capital Garanti: </span>
+        <span>@Model.FormattedSumInsuredWithStars</span>
+        <span>@Model.Currency</span>
+        <br>
+        <span>Garanties :</span>
+        <br>
+
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces suite Maladie/Accident", new TemplateSentenceCondition("DC"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces Accidentel", new TemplateSentenceCondition("DA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Par.Acc age max 65 ans", new TemplateSentenceCondition("IPPA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.Acc.Age max 65 ans", new TemplateSentenceCondition("IPTA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.TC.Age max 65 ans", new TemplateSentenceCondition("IPTC"), null, true, true))
+        </table>
+        }
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template7"){
+        <span>Capital Garanti Décroissant: </span>
+        <span>@Model.FormattedSumInsuredWithStars </span>
+        <span> @Model.Currency </span>
+        if(@Model.GracePeriod != 0){
+        <span class="apply-left-margin"> Periode de Grace: </span>
+        <span>@Model.FormattedGracePeriod </span>
+        <span> ans</span>
+        }
+        <br>
+        <span>Garanties :</span>
+        <br>
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces suite Maladie/Accident", new TemplateSentenceCondition("DC"), new TemplateSentenceCondition("DA"), true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces Accidentel", new TemplateSentenceCondition("DA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.Acc age max 65 ans", new TemplateSentenceCondition("IPTA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces suite Maladie", new TemplateSentenceCondition(TemplateOperation.All, "DC", "DA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.TC.Age max 65 ans", new TemplateSentenceCondition("IPTC"), new TemplateSentenceCondition("DA"), true, true))
+        </table>
+        <p><span>Couvertures: Deces </span><span>@PrintoutHelperMethods.DisplaySentence(Model, "et Invalidite totale Permanente", new TemplateSentenceCondition(TemplateOperation.Or, "IPTC", "IPTA"),null, false) </span><span> suite accident ou maladie qui s'est declaree apres l'effet du contrat</span></p>
+        }
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template8"){
+        <div>
+            - Limite des couvertures : <br>
+            <span class="apply-left-margin">
+                @PrintoutHelperMethods.DisplaySentence(Model, "-Deces avant l'age de 65 ans suite a une maladie qui s'est declaree apres l'effet du contrat : solde moyen mensuel precedant la date du deces dans la limite du plafond selectionne :", new TemplateSentenceCondition("DC"))
+            </span><br>
+            <span class="apply-left-margin">-Deces Acc.avant l'age de 75 ans </span><span>@PrintoutHelperMethods.DisplaySentence(Model, "ou Inv.Per.Tot.Acc.avant", new TemplateSentenceCondition("IPTA"), null, false)</span><span>
+                @PrintoutHelperMethods.DisplaySentence(Model, "l'age de 65 an: 2 fois le solde moyen mensuel precedant la date de l'accident dans la limite du plafond selectionne :", new TemplateSentenceCondition("DA"))
+            </span><br>
+
+        </div>
+        }
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template9"){
+        <div>
+            - Limite des couvertures :<br>
+            <span class="apply-left-margin">@PrintoutHelperMethods.DisplaySentence(Model, " -Deces avant l'age de 65 ans suite a une maladie qui s'est declaree apres l'effet du contrat : ", new TemplateSentenceCondition("DC"), null, true)</span><br>
+            <span class="apply-left-margin">@PrintoutHelperMethods.DisplaySentence(Model, "-Deces Accidentel avant l'age de 75 ans : ", new TemplateSentenceCondition("DA"))</span><br>
+            <span class="apply-left-margin">
+                @PrintoutHelperMethods.DisplaySentence(Model, "-Invalidite Permanente Totale Accidentelle avant l'age 65 ans: ", new TemplateSentenceCondition("IPTA"))
+            </span>
+            <br>
+        </div>
+        <p>L'adhesion sera resiliee des la cloture du compte GALAXIE.</p>
+        }
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template10"){
+        <span>Capital Objectif/Somme Assure: </span>
+        <span>@Model.FormattedSumInsuredWithStars</span>
+        <span>@Model.Currency</span>
+        <br>
+        <span>Garanties :</span>
+        <br>
+
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces suite Maladie/Accident-epargne", new TemplateSentenceCondition("DC"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Deces Accidentel - Epargne", new TemplateSentenceCondition("DA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.TC-Epargne Age max 65 ans", new TemplateSentenceCondition("IPTC"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Par.Acc Epargne age max 65 ans", new TemplateSentenceCondition("IPPA"), null, true, true))
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Inv.Per.Tot.Acc Epargne age max 65 ans", new TemplateSentenceCondition("IPTA"), null, true, true))
+        </table>
+        }
+
+
+
+
+        @if(Model.Package.Settings.PrintoutCoversTemplate == "Template11"){
+        <span>Garanties :</span>
+        <br>
+        <table>
+            @Raw(PrintoutHelperMethods.DisplaySentence(Model, "Exoneration des primes en cas de décès", new TemplateSentenceCondition("EXO2"), null, true, true))
+        </table>
+        }
+
+
+
+
+
+
+
+    </div>
+    <div id="beneficiare" class="field">@Raw(Model.BeneficiareText)</div>
+</div>
+
+
+    if(Model.QuestionnaireAnswers != null && Model.QuestionnaireAnswers.ElementAt(i) != null)
+    {
+<div id="@String.Format("page-{0}",2 + (4 * i))" class="page hidden inactive">
+    <div id="bo-product-code" class="field">@Model.ProductCode:@Model.ProposalNumber.SequenceNumber</div>
+    <div id="bo-product-description" class="field">@Model.ProductName</div>
+    <!--<div id="legal-field" class="field">سوجيكاب ليبان ش.م.ل. مسجلة في سجل هيئات الضمان تحت الرقم ٢٤٣ بتاريخ  ٢٠٠٠/٩/٩ خاضعة لأحكام قانون تنظيم هيئات الضمان الموضوع موضع التنفيذ بالمرسوم رقم ٩٨١٢ تاريخ</div>
+    <div style="top:1.9cm" id="legal-field" class="field">www.sogecapliban.com :١٩٦٨/٥/٤وتعديلاته. موقع إلكتروني</div>-->
+
+    <div id="personal-name" class="wrap-content field"><p>@Model.Client.LastName @Model.Client.FirstName</p></div>
+    @if(Model.Client.Title != null)
+    {
+    <div id="personal-titre" class="field">@Model.Client.Title.Title</div>
+
+
+    }
+    <div id="personal-prenomdu-pere" class="field">@Model.Client.FatherName</div>
+    <div id="personal-datedenaissance" class="field">@Model.Client.FormattedDateOfBirth</div>
+    <div id="taille" class="field">@(Model.Client.Height * 100)</div>
+    <div id="poids" class="field">@Model.Client.Weight</div>
+    <div id="nombre-de-cigarettes" class="field">@GetKey(Model.QuestionnaireAnswers[i],"numberofcigarettes")</div>
+    <div id="nombre-de-verres-alcool" class="field">@GetKey(Model.QuestionnaireAnswers[i],"numberofalcoholdrinks")</div>
+    <div id="first-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"otherlifeinsurance")</div>
+    <div id="second-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"othermedicalinsurance")</div>
+    <div id="third-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"activity")</div>
+    <div id="fourth-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"hearttreatment")</div>
+    <div id="fifth-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"kidneytreatment")</div>
+    <div id="sixth-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"tumortreatment")</div>
+    <div id="seventh-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"skintreatment")</div>
+
+</div>
+
+<!--<div class="page-break hidden"></div>-->
+
+<div id="@String.Format("page-{0}",3 + (4 * i))" class="page hidden inactive">
+    <div style="top:2cm" id="bo-product-code" class="field">@Model.ProductCode:@Model.ProposalNumber.SequenceNumber</div>
+    <div style="top:2cm" id="bo-product-description" class="field">@Model.ProductName</div>
+
+    <!--<div id="legal-field" class="field">سوجيكاب ليبان ش.م.ل. مسجلة في سجل هيئات الضمان تحت الرقم ٢٤٣ بتاريخ  ٢٠٠٠/٩/٩ خاضعة لأحكام قانون تنظيم هيئات الضمان الموضوع موضع التنفيذ بالمرسوم رقم ٩٨١٢ تاريخ</div>
+    <div style="top:1.9cm" id="legal-field" class="field">www.sogecapliban.com :١٩٦٨/٥/٤وتعديلاته. موقع إلكتروني</div>-->
+    <div id="eighth-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"chronicillness")</div>
+    <div id="ninth-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"hospitalhistory")</div>
+    <div id="tenth-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"futuremedicalplans")</div>
+    <div id="elevnth-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"sportsactivities")</div>
+    <div id="twelfth-question" class="field">@GetKey(Model.QuestionnaireAnswers[i],"pregnant")</div>
+</div>
+}
+if(Model.DeclarationOfGoodHealth)
+{
+<div id="@String.Format("page-{0}",4 + (4 * i))" class="page hidden inactive">
+    <div id="declaration-taille" class="field">@(Model.Client.Height * 100)</div>
+    <div id="declaration-poids" class="field">@Model.Client.Weight</div>
+    <div id="reference" class="field">@Model.ProposalNumber.SequenceNumber</div>
+    <div id="bo-product-description" class="field">@Model.ProductName</div>
+    <div id="personal-situation" class="field"><p>@Model.Client.LastName @Model.Client.FirstName       @Model.Client.FatherName</p></div>
+
+</div>
+}
+}
+<!--</div>-->
+@functions{
+    public string GetKey(Dictionary<string,string>
+    dictionary, String key)
+    {
+    if (!dictionary.ContainsKey(key))
+    {
+    return "";
+    }
+    else
+    {
+    return dictionary[key];
+    }
+    }
+    }

@@ -1,0 +1,31 @@
+﻿
+<div class="{{myClass}}" sg-infinite-scroll="">
+
+     <div class="panel-heading pending-header clearfix">
+          <span class="panel-title pending-title" ng-bind="resources[title]">
+          </span>
+         <table class="pending-header-filters">
+             <tr ng-if="filters.length > 1">
+                 <td ng-repeat="filter in filters" ng-click="getData(filter)" class="inbox-filters">
+                     <button class="btn-tertiary pending-btn disable-universal-focus" ng-class="{'btn-select': filter.Selected}" id="filter.Title"><span ng-bind="filter.Title"></span></button>
+                 </td>
+             </tr>
+         </table>
+     </div>
+
+     <div class="scroll-target inbox-filter">
+          <table class="table table-hover" ng-if="items.length > 0">
+               <tbody>
+                    <tr ng-repeat="item in items" style="cursor:pointer">
+                         <td ng-click="getDetails(item)"><span ng-bind="item.Title"></span></td>
+                    </tr>
+
+               </tbody>
+          </table>
+         <div ng-show="isLoading">
+             <img style="margin-left: 50%" class="items_loader_bsy" width="32" height="32" data-ng-src="neutral/images/ajax-loader-big.gif" alt="Loading..." />
+         </div>
+          <div ng-if="items.length == 0"><center><h4 ng-bind="resources.NoItemsWereFound"></h4></center></div>
+     </div>
+
+</div>

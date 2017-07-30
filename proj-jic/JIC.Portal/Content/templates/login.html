@@ -1,0 +1,117 @@
+﻿<div id="page_bsy" class="login_bsy">
+    <div id="content_bsy">
+        <div class="login_welcome_note_bsy">
+            <p>{{siteData.WelcomeNote}}</p>
+        </div>
+
+        <div class="login_modules">
+
+           <ams-localization-widget></ams-localization-widget>
+
+            <hr class="clearer_bsy" />
+
+            <div class="login_logo"><img width="120" height="26" ng-src="{{siteData.LogoUrl}}" /></div>
+
+            <h1 class="title_bsy">{{siteData.Title}}</h1>
+
+            <div class="login_controls_bsy" ng-show="showView == 'login'">
+                <h2>Your {{siteData.Title}} account</h2>
+                <div data-ng-show="showErrorMessage" class="invalid_credentials_bsy">
+                    <h1>{{errorMessage}}</h1>
+                    <p>{{errorMessageDescription}}</p>
+                </div>
+                <form action="{{siteData.PostUrl}}" method="post" name="loginForm">
+                    <input type="hidden" name="additionalData" value="{{additionalData}}" />
+                    <input type="hidden" name="returnUrl" value="{{siteData.ReturnUrl}}" />
+                    <label class="a_bsy">
+                        <span>Username</span>
+                        <input type="text" ng-model="loginModel.username" name="username" required="" />
+                    </label>
+                    <label class="a_bsy">
+                        <span>Password</span>
+                        <input type="password" ng-model="loginModel.password" name="password" required="" />
+                    </label>
+                    <label class="a_bsy" ng-show="loginModel.correlationData">
+                        <span>{{loginModel.correlationTitle}}</span>
+                        <input type="text" ng-model="loginModel.correlationData" name="correlationData" />
+                    </label>
+                    <label class="b_bsy">
+                        <input type="checkbox" data-ng-model="loginModel.rememberMe" name="rememberMe" />
+                        <span>Remember my username</span>
+                    </label>
+                    <label class="b_bsy">
+                        <input type="checkbox" data-ng-model="loginModel.keepMeSignedIn" name="keepMeSignedIn" />
+                        <span>Keep me signed in</span>
+                    </label>
+                    <label class="b_bsy">
+                        <span ng-click="forgotPassword();">Forgot Password ?</span>
+                    </label>
+                    <span class="c_bsy">
+                        <input type="submit" value="Login" data-ng-disabled="loginForm.$invalid" />
+                        <a href="/Account/Register">Register...</a>
+                        <!--   <a>Problems logging in?</a>-->
+                    </span>
+                </form>
+            </div>
+            
+            <div class="login_controls_bsy" ng-show="showView == 'forgotPassword'">
+                <h2>Forgot your password</h2>
+                <div data-ng-show="showErrorMessage" class="invalid_credentials_bsy">
+                    <h1>{{errorMessage}}</h1>
+                    <p>{{errorMessageDescription}}</p>
+                </div>
+                <form atom-form="forgotPasswordForm" name="forgotPasswordForm" novalidate="novalidate">
+                    <atom type="'email'" name="'Your Email'" required="true" datavalue="loginModel.username"></atom>
+                    <atom type="'button'" name="Submit" actiontype="'submit'" action="sendForgotPasswordRequest"></atom>
+                    <atom type="'button'" name="Cancel" actiontype="'default'" action="cancel"></atom>
+                </form>
+            </div>
+
+            <div class="login_alt_bsy ng-cloak" data-ng-show="hasADProvider || otherProviders.length > 0">
+                <h2>Other login methods</h2>
+                <div class="windows_bsy" data-ng-show="hasADProvider">
+                    <form action="/oauth/authenticate" method="post">
+                        <input type="submit" value="Login with Windows credentials" />
+                        <input type="hidden" value="Windows" name="providerType" />
+                        <input type="hidden" value="{{siteId}}" name="siteId" />
+                    </form>
+                </div>
+                <div class="social_bsy" data-ng-show="otherProviders.length > 0">
+                    <h3>... or login using your account with these services:</h3>
+                    <ul>
+                        <li data-ng-repeat="type in otherProviders">
+                            <span data-ng-class="{microsoft_bsy: type=='Microsoft', 
+                                              google_bsy: type=='Google',
+                                              facebook_bsy: type=='Facebook', 
+                                              linkedin_bsy: type=='LinkedIn', 
+                                              yahoo_bsy: type=='Yahoo', 
+                                              twitter_bsy: type=='Twitter',
+                                              OpenID: type=='OpenID' }">
+                                <form action="/oauth/authenticate" method="post">
+                                    <input type="submit" value="" />
+                                    <input type="hidden" value="{{type}}" name="providerType" />
+                                    <input type="hidden" value="{{siteId}}" name="siteId" />
+                                </form>
+                            </span>
+                            <span>{{type}}</span>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="clearer_bsy" />
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+

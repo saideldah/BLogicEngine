@@ -1,0 +1,22 @@
+﻿@using BSynchro.Web
+@using BSynchro.Web.Optimization.Globalization
+@{
+    if(Model.LanguageId.HasValue)
+        {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Model.LanguageId.Value);
+        }
+    var lang = CultureManager.Instance.GetCurrentUICultureInfo().TwoLetterISOLanguageName;
+    var dir = CultureManager.Instance.IsRTL() ? "rtl" : "ltr";
+}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="@lang" dir="@dir">
+
+<head>
+    <title>Title</title>
+    <!--<link href="common.css" rel="stylesheet" />-->
+</head>
+<body>
+    <div class="printoutpage @Model.InternalName">
+        @RenderBody()
+    </div>
+</body>
+</html>

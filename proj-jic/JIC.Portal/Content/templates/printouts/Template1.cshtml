@@ -1,0 +1,37 @@
+﻿@using SogeCap.Portal.Models
+
+@model EBranch.Strategy.SogeCap.Printouts.SogecapProposalPrintoutModel
+
+<p>@DisplaySentence(Model, "Deces suite Maladie/Accident", new TemplateSentenceCondition("DC"), new TemplateSentenceCondition("DA"))</p>
+<p>@DisplaySentence(Model, "Deces / Acc avant age 75", new TemplateSentenceCondition("DA"))</p>
+<p>@DisplaySentence(Model, "Inv.Per.Tot.Acc age max 65 ans", new TemplateSentenceCondition("IPTA"))</p>
+<p>@DisplaySentence(Model, "Deces suite Maladie",new TemplateSentenceCondition(Operation.All, "DC", "DA")) </p>
+<p>@DisplaySentence(Model, "Inv.Per.Tot.TC.Age max 65 ans", new TemplateSentenceCondition("IPTC"), new TemplateSentenceCondition("DA"))</p>
+
+@helper DisplaySentence(EBranch.Strategy.SogeCap.Printouts.SogecapProposalPrintoutModel model, string sentence, TemplateSentenceCondition applicableCover, TemplateSentenceCondition exceptionCover = null, Boolean appendSumInsured = true)
+{
+
+    CoverEvaluationResult coverEvaluationResult = SogeCap.Portal.Models.PrintoutHelperMethods.ContainsCovers(model, applicableCover);
+    Boolean shouldReturnSentence = coverEvaluationResult.MeetsCondition;
+    if (exceptionCover != null)
+    {
+        shouldReturnSentence = !SogeCap.Portal.Models.PrintoutHelperMethods.ContainsCovers(model, exceptionCover).MeetsCondition;
+    }
+
+    if (!shouldReturnSentence)
+    {
+        @String.Empty;
+    }
+    else
+    {
+        String sentenceResult = sentence;
+        if (appendSumInsured) { 
+            //Use the first applicable cover to retrieve the sum-insured (by convention).
+            String coverCode = applicableCover.CoverCodes.FirstOrDefault();
+            EBranch.Strategy.SogeCap.Models.Cover cover = coverEvaluationResult.CoverMap[coverCode];
+            sentenceResult = String.Format("{0} {1} {2}", sentence, cover.SumInsured, model.Currency);
+        }
+        @String.Format(sentenceResult);
+    }
+
+}

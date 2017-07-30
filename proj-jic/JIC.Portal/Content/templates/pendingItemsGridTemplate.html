@@ -1,0 +1,51 @@
+﻿<div class="panel panel-primary pending-items">
+
+    <div class="panel-heading pending-header clearfix">
+        <span class="panel-title pending-title" ng-bind="resources.PendingItems">
+        </span>
+        <table class="pending-header-filters">
+            <tr>
+                <td ng-repeat="filter in filters" ng-click="getDataFilter(filter)" class="pending-filters">
+                    <button class="btn-primary pending-btn disable-universal-focus" ng-class="{'btn-select': filter._isSelected}" id="filter.title"><span ng-bind="resources[filter.title]"></span></button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+     <div class="panel-body pending-body" style="padding: 0">
+
+          <!--<div ng-show="requestData">
+               <img src="/Content/themes/default/images/ajax-loader-small.gif" style="margin-left: 50%" />
+          </div>-->
+          <div style="overflow-y: scroll; height: 32px;">
+               <table class="table" ng-if="PendingItems.length > 0">
+                    <thead>
+                         <tr class="bg-info">
+                              <th>#</th>
+                              <th>Client</th>
+                              <th ng-show="bankingProvider == 'T24'"><!--<span ng-bind="resources.AccountClientId"></span>-->Account Id</th>
+                              <th ng-show="bankingProvider == 'ICBS'"><span ng-bind="resources.Radical"></span></th>
+                              <th><strong><span ng-bind="resources.BOProduct"></span></strong></th>
+                              <th><span ng-bind="resources.CreatedOn"></span></th>
+                         </tr>
+                    </thead>
+               </table>
+          </div>
+          <div style="max-height:300px;overflow-y:scroll">
+               <table class="table table-hover" ng-if="PendingItems.length > 0">
+                    <tbody>
+                         <tr ng-repeat="item in PendingItems" ng-click="navigate(item.Url)" style="cursor:pointer">
+                              <td><span ng-bind="item.SequenceNumber"></span></td>
+                              <td class="text-muted"><span ng-bind="item.Client.FullName"></span><br /> <p><span ng-if="bankingProvider == 'T24'">Client Id</span>
+                              <span ng-if="bankingProvider == 'ICBS'">Mat. #</span><span ng-bind="item.Client.Matricule"></span></p></td>
+                              <td><span ng-bind="item.Radical"></span></td>
+                              <td><strong><span ng-bind="item.Product.Title"></span></strong></td>
+                              <td><span ng-bind="item.CreationDate | date"></span></td>
+                         </tr>
+                    </tbody>
+               </table>
+          </div>
+          <div ng-if="PendingItems.length == 0"><center><h4 ng-bind="resources.NoItemsWereFound"></h4></center></div>
+     </div>
+</div>

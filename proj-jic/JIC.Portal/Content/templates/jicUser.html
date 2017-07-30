@@ -1,0 +1,20 @@
+﻿<div class="col-md-6 list-item">
+    <div class="media">
+        <!--<div class="list-item-left-bord"></div>-->
+        <span class="iconfont_bsy"
+              ng-click="toggleItemSelection($index, item)"
+              ng-class="{ 'icon-checkbox-blank': (!item.IsSelected), 'icon-checkbox-checked': item.IsSelected }"
+              tabindex="-1">
+        </span>
+        <div class="media-body padding-left" ng-click="itemClicked($index, item)" tabindex="-1">
+            <h4 class="media-heading">
+                <span ng-bind="item.Title"></span>
+            </h4>
+            <p>
+                <span ng-bind="item.Email"></span><br/>
+                <span ng-bind="item.Username" ng-show="item.Username && item.Email != item.Username"></span><br ng-show="item.Username && item.Email != item.Username" />
+                <span ng-show="item.Profiles" ng-bind="item.Profiles" class="text-muted"></span>
+            </p>
+        </div>
+    </div>
+</div>

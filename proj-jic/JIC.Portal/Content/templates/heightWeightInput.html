@@ -1,0 +1,23 @@
+﻿
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3">
+                        <atom uid="primaryheightInput" amsautofocus="true" type="'number'" restricttonumbers="true" modelkey="modelKeys.ClientHeight" datavalue="model.Client.Height" required="true" name="resources.PrimaryHeight" orientation="'vertical'" min="1.0" max="2.5" decimalprecision="2" numbertype="'decimal'" addon="addonInm"></atom>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <atom uid="primaryweightInput" type="'number'" restricttonumbers="true" modelkey="modelKeys.ClientWeight" datavalue="model.Client.Weight" required="true" name="resources.PrimaryWeight" orientation="'vertical'" min="30" max="200" decimalprecision="1" numbertype="'decimal'" addon="addonInKg"></atom>
+                    </div>
+                    <div class="col-md-6 col-lg-3" ng-if="fakeJointInsured">
+                        <atom uid="secondaryheightInput" type="'number'" restricttonumbers="true" modelkey="modelKeys.JointInsuredHeight" datavalue="model.JointInsured.Height" required="true" name="resources.SecondaryHeight" orientation="'vertical'" min="1.0" max="2.5" decimalprecision="2" numbertype="'decimal'" addon="addonInm"></atom>
+                    </div>
+                    <div class="col-md-6 col-lg-3" ng-if="fakeJointInsured">
+                        <atom uid="secondaryweightInput" type="'number'" restricttonumbers="true" modelkey="modelKeys.JointInsuredWeight" datavalue="model.JointInsured.Weight" required="true" name="resources.SecondaryWeight" orientation="'vertical'" min="30" max="200" decimalprecision="1" numbertype="'decimal'" addon="addonInKg"></atom>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

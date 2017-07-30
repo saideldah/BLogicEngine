@@ -1,0 +1,8 @@
+﻿<div ng-show="noLongerVisibleFields.length">
+    <div class="col-xs-12 text-warning bg-warning sg-error-message">
+        <i class="fa fa-exclamation-triangle"></i> {{resources.FieldsNoLongerVisible}}
+        <ul class="normalul">
+            <li ng-repeat="f in noLongerVisibleFields" ng-bind="f.Title"></li>
+        </ul>
+    </div>
+</div>

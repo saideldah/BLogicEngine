@@ -1,0 +1,70 @@
+﻿
+/*Bootstrap adjusttments*/
+/*.visualitem_remove_bsy span{
+    float:right;
+}*/
+
+.force-wrap {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+}
+
+.ptr{
+
+    cursor: pointer;
+
+}
+
+.visualitem_remove_bsy .glyphicon-remove-circle {
+    float: right;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.visualitem_remove_bsy .glyphicon-remove-circle:hover{
+
+   font-size: 17px; 
+}
+
+/* TEMPORARY STYLES to be removed */
+
+.form-group.block_bsy:before,
+.form-group.block_bsy:after {
+    content: " ";
+    display: table;
+}
+
+.form-group.block_bsy:after {
+    clear: both;
+}
+
+/* end TEMPORARY STYLES to be removed */
+
+
+/*@media screen and (max-width: 1024px){
+    .panel_margined_div { 
+        width: 100%;
+    max-width:1024px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .panel_margined_div { 
+        width: 100%;
+         max-width:640px;
+    }
+}*/ 
+
+/*@media screen and (max-width: 768px) {
+    .panel_margined_div { 
+        width: 100%;
+         
+    }*/
+
+/*.parentDiv {
+    pointer-events:none;        
+}   
+.childDiv {
+    pointer-events:all;
+}*/
+

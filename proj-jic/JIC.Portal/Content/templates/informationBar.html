@@ -1,0 +1,28 @@
+﻿
+<div class="null_height_bsy" ng-show="(service.data.Model.JointInsured || service.data.Model.Client) && $root.page.className == 'wizard' && wizardInit">
+    <div class="div_work_wrapper_bsy" set-class-when-at-top="fix-to-top" ng-class="{'slide_div_work_wrapper_bsy':boolChangeClass}"
+         ng-style="getInfoBarStyles()" style="margin-right: 15px;">
+        <div class="sidebar_bsy" ng-class="{'slide_out_bsy':boolChangeClass}">
+            <div class="sideparperson" ng-if="service.data.Model.Client && service.data.Model.Client.FullName">
+                <span ng-show="bankingProvider == 'ICBS'">{{resources.Primary}}: Mat:</span>
+                <span ng-show="bankingProvider == 'T24'">{{resources.Primary}}: ClientId:</span>&nbsp;<span ng-bind="service.data.Model.Client.ClientId || 'N/A'"></span>&nbsp;<span>-</span>&nbsp;
+                <span ng-bind="service.data.Model.Client.FullName"></span>&nbsp;<span>-</span>&nbsp;
+                <span ng-bind="service.data.Model.Client.FormattedDateOfBirth"></span>
+            </div>
+            <div class="sideparperson" ng-if="service.data.Model.JointInsured && service.data.Model.JointInsured.FullName">
+                <span ng-show="bankingProvider == 'ICBS'">{{resources.Secondary}}: Mat:</span>
+                <span ng-show="bankingProvider == 'T24'">{{resources.Secondary}}: ClientId:</span>&nbsp;<span ng-bind="service.data.Model.JointInsured.ClientId || 'N/A'"></span>&nbsp;<span>-</span>&nbsp;
+                <span ng-bind="service.data.Model.JointInsured.FullName"></span>&nbsp;<span>-</span>&nbsp;
+                <span ng-bind="service.data.Model.JointInsured.FormattedDateOfBirth"></span>
+            </div>
+            <div class="sideparperson" ng-if="service.data.SelectedProduct.Title">
+                <span ng-bind="service.data.SelectedProduct.Title"></span>
+            </div>
+        </div>
+        <button class="work_wrapper_bsy" ng-click="sidebarClick()" ng-class="{'slide_btn_out_bsy':boolChangeClass}">
+            <span class="span_work_wrapper_bsy">{{service.data.Model.Client.FullName}}</span><br />
+            <span ng-show="bankingProvider == 'T24'">ClientId:</span>
+            <span  ng-show="bankingProvider == 'ICBS'">Mat:</span>&nbsp;<span ng-bind="service.data.Model.Client.ClientId || 'N/A'"></span>
+        </button>
+    </div>
+</div>

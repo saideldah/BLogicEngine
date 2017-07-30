@@ -1,0 +1,238 @@
+﻿@using BSynchro.Web
+@using BSynchro.Web.Optimization.Globalization
+@using SogeCap.Common
+@using EBranch.Strategy.SogeCap;
+@using BSynchro.Web.Localization;
+@using EBranch.Strategy.SogeCap.Models
+@{
+    if(Model.LanguageId.HasValue)
+        {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Model.LanguageId.Value);
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(Model.LanguageId.Value);
+        }
+    var lang = CultureManager.Instance.GetCurrentUICultureInfo().TwoLetterISOLanguageName;
+    var dir = CultureManager.Instance.IsRTL() ? "rtl" : "ltr";
+}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="@lang" dir="@dir">
+
+<head>
+    <title>Cover Note</title>
+    <!--<link href="common.css" rel="stylesheet" />-->
+    <style>
+        /* red #97282a */
+        /* blue #213b78 */
+        /* grey #333333 */
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            color: #333333;
+            height: 100%;
+        }
+
+        .printoutpage {
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        center h2, .underline {
+            display: inline-block;
+            border-bottom: 2px solid black;
+        }
+
+        .title-form {
+            margin: 0;
+        }
+
+        .header-tbl-space {
+            width: 60%;
+        }
+
+        .header-tbl {
+            font-size: 20px;
+        }
+
+        .body-tbl {
+            border-collapse: collapse;
+        }
+
+            .body-tbl, .body-tbl td, .body-tbl th {
+                border: 1px solid black;
+                font-size: 20px;
+            }
+
+        .arial-font {
+            font-family: "Arial", sans-serif;
+            font-size: 12px;
+        }
+
+            .arial-font h2 {
+                margin: 0;
+            }
+
+        .marging {
+            margin-top: 20px;
+        }
+
+        .Cover {
+            margin-top: 130px;
+        }
+
+        .Signature {
+            margin-top: 25px;
+        }
+
+        .padding {
+            padding-top: 15px;
+        }
+
+        .footer {
+            padding-top: 50px;
+        }
+        div.footer > span{
+            margin-right: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <center><img onerror="this.style.display='none'" src="data:image/png;base64,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" width="100px"></center>
+    <div class="printoutpage">
+        <table class="header-tbl">
+            <tr>
+                <td>
+                    Agence:
+                </td>
+                <td>
+                    @Model.AgencyName
+                </td>
+                <td class="header-tbl-space">
+                    @if(@Model.Barcode != null){
+                    <img src="data:image/png;base64,@Model.Barcode" />
+                    }
+                </td>
+                <td>
+                    Réf: @Model.Sequence
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Chargé(e):
+                </td>
+                <td>
+                    @Model.AgentName
+                </td>
+                <td class="header-tbl-space"></td>
+                <td>
+                    Beyrouth, le @Model.FormattedSystemDate
+                </td>
+            </tr>
+        </table>
+        <center><h2 class="title-form">@Model.DecisionType</h2></center>
+        <center><h2 class="title-form">(Valable pour 4 mois)</h2></center>
+        <center><h2>@Model.ProductName - PROPOSITION NO. @Model.ProposalNumber RECUE LE @Model.FormattedCreatedDate</h2></center>
+
+        <table class="body-tbl">
+            <tr>
+                <th>Effet B.A.</th>
+                <th>Nom</th>
+                <th>Garantie de Base</th>
+                <th>
+                    Prime <br />
+                    Proposée
+                </th>
+                @if(@Model.ModifiedPremium != 0){
+                <th>Nouvelle<br />
+                    prime
+                </th>
+                }
+                <th>Périodicité</th>
+                <th>Couvertures *</th>
+                <th>Durée Contrat</th>
+                @if(@Model.ContractDuration != null){
+                <th>Durée du Prêt</th>
+                }
+            </tr>
+            <tr> 
+                <td><center>@Model.FormattedProposalEffectiveDate</center></td>
+                <td width="300px"><div>@Model.Clients</div><div>Radical: @Model.Radical</div></td>
+                <td>@Model.Currency @Model.FormattedSumInsured</td>
+                <td><center>@Model.Currency @Model.FormattedPremium</center></td>
+                @if(@Model.ModifiedPremium != 0){
+                <td><center> 
+                    @Model.Currency @Model.FormattedModifiedPremium <br />
+                     @if(@Model.HasExclusion){<span>voir Exclusion</span>}
+                    </center></td>
+                }
+                <td><center>@Model.Frequency</center></td>
+                <td><center>@Model.Covers</center></td>
+                @if(@Model.ContractDuration != null){
+                <td><center>@Model.ContractDuration ans</center></td>
+                }
+                <td><center>@Model.ProposalDuration ans</center></td>
+            </tr>
+        </table>
+        <div class="arial-font">
+            <div>
+                <h2>- Nous vous confirmons par la présente que la couverture demandée est accordée pour la personne ci-haut nommée.</h2>
+            </div>
+            <div>
+                <h2>- Le certificat d'adhésion sera émis dès la réception de la fiche de décaissement</h2>
+            </div>
+            @if(@Model.SucceedingYearPremium != null){
+            <div class="marging">
+                <h2>- Si le décaissement se fera en @Model.SucceedingYear; la prime sera de : @Model.Currency @Model.FormattedSucceedingYearPremium</h2>
+            </div>
+            }
+            @if(@Model.Remark != null){
+            <div class="marging">
+                <h2 style="white-space: pre-line">@Model.Remark</h2>
+            </div>
+            }
+            <div class="Cover">
+                <h2>
+                    <span>* DC = Décès suite à une maladie ou un accident</span>
+                    @if(@Model.HasIptcCover) { <span>, IPTC = Invalidité permanente totale suite à une maladie ou un accident</span> }
+                </h2>
+            </div>
+        </div>
+        <div class="Signature">
+            <table>
+                <tr>
+                    <td>
+                        <h2 class="underline">
+                            Signature du Client
+                        </h2>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="padding">
+                        <h2>....................................</h2>
+                    </td>
+                    <td>
+                        @if(@Model.HasIptcCover) {
+                        <h2>
+                            - N.B. La couverture I.P.T.C. prendra échéance à 65 ans
+                        </h2>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="footer" dir="rtl">
+        @ResourceManager.Instance.GetValue("coverNoteFooterLegalText", "printouts", 1036) 
+        <span>
+            @ResourceManager.Instance.GetValue("coverNoteFooterLegalTextExtra", "printouts", 1036)
+        </span>
+    </div>
+
+</body>
+</html>

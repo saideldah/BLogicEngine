@@ -1,0 +1,416 @@
+﻿ @@media print {
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .active {
+            visibility: visible !important;
+            display: inline-block !important;
+        }
+
+        .inactive {
+            visibility: hidden !important;
+            display: none !important;
+        }
+
+        table {
+            margin-left: 4em;
+        }
+
+        .table_without_margin {
+            margin-left: 0;
+        }
+
+        td:nth-child(1) {
+            width: 12cm;
+        }
+
+        td:nth-child(2) {
+            width: 8cm;
+        }
+
+        td:nth-child(3) {
+            width: 6cm;
+        }
+
+        .apply-left-margin {
+            margin-left: 2em;
+        }
+
+        #page-wrapper,
+        .modal,
+        .modal-backdrop,
+        .modal-content,
+        #page-content {
+            visibility: hidden;
+            display: none;
+        }
+
+        .field {
+            font-family: "Times New Roman", monospace;
+            font-size: 12px;
+            position: absolute;
+        }
+
+        .page-break {
+            /*page-break-after: always;*/
+        }
+
+        .page {
+            height: 100%;
+            width: 100%;
+            top: -1.29cm;
+            position: relative;
+            display: inline-block;
+        }
+
+        .wrap-content {
+            display: table;
+            height: 0.7cm;
+        }
+
+            .wrap-content p {
+                line-height: 70%;
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+        #personal-name {
+            width: 6cm;
+            left: 3.6009cm;
+            top: 3.0cm;
+        }
+
+        #personal-titre {
+            left: 3.208cm;
+            top: 3.65cm;
+        }
+
+        #personal-prenomdu-pere {
+            left: 17.546cm;
+            top: 3.0cm;
+        }
+
+        #personal-datedenaissance {
+            left: 15.706cm;
+            top: 3.75cm;
+        }
+
+        #taille {
+            left: 2.004cm;
+            top: 4.15cm;
+        }
+
+        #poids {
+            left: 15.03cm;
+            top: 4.15cm;
+        }
+
+        #nombre-de-cigarettes {
+            left: 7.682cm;
+            top: 4.55cm;
+        }
+
+        #nombre-de-verres-alcool {
+            left: 21.71cm;
+            top: 4.55cm;
+        }
+
+        #first-question {
+            left: 0;
+            top: 7.6cm;
+        }
+
+        #second-question {
+            left: 0;
+            top: 10cm;
+        }
+
+        #third-question {
+            left: 0;
+            top: 12.4cm;
+        }
+
+        #fourth-question {
+            left: 0;
+            top: 15.5cm;
+        }
+
+        #fifth-question {
+            left: 0;
+            top: 19.4cm;
+        }
+
+        #sixth-question {
+            left: 0;
+            top: 23cm;
+        }
+
+        #seventh-question {
+            left: 0;
+            top: 25.5cm;
+        }
+        #proposal-bo-product-code {
+            left: 0;
+            top: 1.7cm;
+        }
+
+        #proposal-bo-product-description {
+            right: 1.5cm;
+            top: 1.6cm;
+        }
+
+        #bo-product-code {
+            left: 6.5cm;
+            top: 2.9cm;
+        }
+
+        #bo-product-description {
+            right: 5.3cm;
+            top: 2.9cm;
+        }
+
+        #legal-field {
+            right: 1cm;
+            top: 1.6cm;
+            font-size: 8px !important;
+        }
+
+        #is-draft {
+            top: 1.65cm;
+            left: 13.5cm;
+        }
+
+        #beneficiare {
+            left: 0.7cm;
+            top: 19cm;
+            right: 1.3cm;
+        }
+
+        #personal-situation {
+            left: 4.843cm;
+            top: 4.1cm;
+        }
+
+        #personal-immeuble {
+            left: 3.173cm;
+            top: 4.58cm;
+        }
+
+        #personal-localite {
+            left: 2.005cm;
+            top: 5.4cm;
+        }
+
+        #personal-pays {
+            left: 1.437cm;
+            top: 5.87cm;
+        }
+
+        #personal-telephone {
+            left: 15.698cm;
+            top: 5.4cm;
+        }
+
+        #personal-fax {
+            left: 24.048cm;
+            top: 5.4cm;
+        }
+
+        #personal-biote-postale {
+            left: 16.366cm;
+            top: 4.95cm;
+        }
+
+        #personal-rue {
+            width: 7cm;
+            left: 12.366cm;
+            top: 4.8cm;
+        }
+
+        #personal-nationalite {
+            left: 12.366cm;
+            top: 4.25cm;
+        }
+
+
+        #personal-boite-postale {
+            left: 16.366cm;
+            top: 5cm;
+        }
+
+        #profession-profession {
+            left: 2.85cm;
+            top: 6.99cm;
+        }
+
+        #profession-nomde-employeur {
+            left: 6.845cm;
+            top: 6.7cm;
+        }
+
+        #profession-localite {
+            left: 1.672cm;
+            top: 8.6cm;
+        }
+
+        #profession-pays {
+            left: 1.037cm;
+            top: 9.2cm;
+        }
+
+        #profession-rue {
+            width: 7cm;
+            left: 12.332cm;
+            top: 8.0cm;
+        }
+
+        #profession-address {
+            left: 6.848cm;
+            top: 9.85cm;
+        }
+
+        #profession-telephone {
+            left: 15.698cm;
+            top: 8cm;
+        }
+
+        #profession-fax {
+            left: 24.048cm;
+            top: 8cm;
+        }
+
+        #profession-boite-postale {
+            left: 16.366cm;
+            top: 7.6cm;
+        }
+
+        #profession-immeuble {
+            left: 3.006cm;
+            top: 7.15cm;
+        }
+
+        #compte {
+            left: 14.533cm;
+            top: 10.9cm;
+        }
+
+        #agence {
+            left: 2.205cm;
+            top: 10.9cm;
+        }
+
+        #apporteur-daffaire-nom {
+            left: 7.185cm;
+            top: 11.8cm;
+        }
+
+        #apporteur-daffaire-prenom {
+            left: 14.702cm;
+            top: 11.8cm;
+        }
+
+        #apporteur-daffaire-matricule {
+            left: 17.546cm;
+            top: 11.8cm;
+        }
+
+        #charge-declientele-nom {
+            left: 7.185cm;
+            top: 11.3cm;
+        }
+
+        #charge-declientele-prenom {
+            left: 14.702cm;
+            top: 11.3cm;
+        }
+
+        #charge-declientele-matricule {
+            left: 17.546cm;
+            top: 11.3cm;
+        }
+
+        #date-deffet {
+            left: 8cm;
+            top: 19.85cm;
+        }
+
+        #duree-ducontract {
+            left: 6.68cm;
+            top: 20.3cm;
+        }
+
+        #periodicte-depaiement {
+            left: 9.185cm;
+            top: 20.74cm;
+        }
+
+        #montant-delaprime {
+            left: 12.525cm;
+            top: 21.2cm;
+        }
+
+        #duree-depaiement {
+            left: 10.02cm;
+            top: 21.5cm;
+        }
+
+        #indexation {
+            left: 17.535cm;
+            top: 20.72cm;
+        }
+
+        #initial-payment {
+            left: 12cm;
+            top: 19.85cm;
+        }
+
+        #eighth-question {
+            left: 0;
+            top: 4.1cm;
+        }
+
+        #ninth-question {
+            left: 0;
+            top: 6.5cm;
+        }
+
+        #tenth-question {
+            left: 0;
+            top: 9.15cm;
+        }
+
+        #elevnth-question {
+            left: 0;
+            top: 11.2cm;
+        }
+
+        #twelfth-question {
+            left: 0;
+            top: 13.2cm;
+        }
+
+        #declaration-taille {
+            left: 4cm;
+            top: 13.45cm;
+        }
+
+        #declaration-poids {
+            left: 4cm;
+            top: 13.82cm;
+        }
+
+        #reference {
+            left: 10.2cm;
+            top: 2.4cm;
+            width: 3.8cm;
+            text-align: center;
+        }
+
+        #covers {
+            left: 0;
+            top: 13.3cm;
+            right: 1.3cm;
+        }
+    }

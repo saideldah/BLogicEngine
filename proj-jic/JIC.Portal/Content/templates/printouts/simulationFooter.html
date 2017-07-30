@@ -1,0 +1,23 @@
+﻿@using SogeCap.Common
+@using EBranch.Strategy.SogeCap;
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <style>
+        .footer {
+            margin-top: 2em;
+            text-align: center;
+            font-size: 0.85em;
+            color: #666666;
+        }
+    </style>
+    <div class="footer">
+        <p>SogeCap Lebanon is not responsible for rate updates. This simulation is valid during the current year for 1 month maximum.</p>
+        <p>Agent Name: @Model.AgentName | Agency: @Model.Agency | Agency no.: @Model.AgencyCode</p>
+        <p>Simulation Date: @Model.CreatedDate.ToString(SiteConstants.SogeCapDateFormat)</p>
+    </div>
+</body>
+</html>
+

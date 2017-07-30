@@ -1,0 +1,5 @@
+﻿<crazy-login
+    username="@(!String.IsNullOrEmpty(ViewBag.Username) ? String.Format("'{0}'", ViewBag.Username) : String.Empty)"    
+    additional-data="@(!String.IsNullOrEmpty(ViewBag.Q) ? String.Format("'{0}'", ViewBag.Q) : String.Empty)"
+    show-error-message="@ViewBag.InvalidCredentials">
+</crazy-login>

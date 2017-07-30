@@ -1,0 +1,5 @@
+﻿An account has been created for you on @Model.Site.Name with the following information:
+Username: @Model.User.Username
+Site: https://@Model.Site.BasePath
+
+Your password is the same as your Windows password.

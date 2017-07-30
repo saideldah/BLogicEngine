@@ -1,0 +1,72 @@
+﻿@using BSynchro.Web
+@using BSynchro.Web.Optimization.Globalization
+
+@{
+    var lang = CultureManager.Instance.GetCurrentUICultureInfo().TwoLetterISOLanguageName;
+    var dir = CultureManager.Instance.IsRTL() ? "rtl" : "ltr";
+}
+
+<!DOCTYPE html>
+<html lang="@lang" dir="@dir" moznomarginboxes>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title ng-bind="page.title"></title>
+
+    <base href="@String.Format("{0}/{1}/", SiteContext.Current.SiteAddress.TrimEnd('/'), CultureManager.Instance.GetCurrentUICultureInfo().LCID)" />
+
+    <link rel="icon" type="image/png" href="~/Content/themes/default/images/sogecap-favicon.png" />
+
+    <!-- Mobile Internet Explorer ClearType Technology -->
+    <!--[if IEMobile]>  <meta http-equiv="cleartype" content="on">  <![endif]-->
+    @Styles.Render(String.Format(GlobalConstants.Optimization.PolyfillStylesBundleNameFormat, GlobalConstants.Optimization.AmsMainBundleName))
+    @Scripts.Render(String.Format(GlobalConstants.Optimization.PolyfillScriptsBundleNameFormat, GlobalConstants.Optimization.AmsMainBundleName))
+    @Styles.Render(String.Format(GlobalConstants.Optimization.StylesBundleNameFormat, GlobalConstants.Optimization.AmsMainBundleName))
+
+    @if (System.Web.Optimization.BundleTable.EnableOptimizations)
+    {
+        <link rel="stylesheet" href="@String.Format("/{0}/styles", CultureManager.Instance.GetCurrentUICultureInfo().LCID)" />
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/CDN/ams/themes/default/styles/fonts.css" />
+        <link rel="stylesheet" href="~/CDN/ams/themes/default/styles/styles.css" />
+        <link rel="stylesheet" href="~/Content/themes/default/styles/styles.css" />
+    }
+
+    @RenderSection("Styles", false)
+
+</head>
+
+<body class="{{page.className}}">
+    <div id="page-wrapper">
+
+        @RenderBody()
+
+        @*<div class="action-bar-wrapper">
+                <ams-app-bar></ams-app-bar>
+            </div>*@
+
+        <ams-alert is-visible="$root.rootShell.notification.isVisible" type="$root.rootShell.notification.type" close="$root.rootShell.notification.hide()"><span ng-bind="$root.rootShell.notification.message"></span></ams-alert>
+
+    </div>
+    <div ng-if="$root.rootShell.loader.isVisible" id="page-loader">
+        <div class="layer"></div>
+        <div class="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    @Scripts.Render(String.Format(GlobalConstants.Optimization.ScriptsBundleNameFormat, GlobalConstants.Optimization.AmsMainBundleName))
+    @RenderSection("Scripts", false)
+    @Html.Partial("~/Views/Bootstrap.cshtml")
+    @RenderSection("LateScripts", false)
+
+</body>
+
+</html>

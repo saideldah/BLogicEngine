@@ -1,0 +1,151 @@
+﻿@using System.Globalization
+@using BSynchro.Web
+@using BSynchro.Web.Optimization
+@using BSynchro.Web.Optimization.Configuration.Modules
+@using BSynchro.Web.Optimization.ClientModules
+@using BSynchro.Web.Optimization.Globalization
+@using BSynchro.Web.Localization
+@using Newtonsoft.Json
+@{
+    // Module configuration
+    var requireJsFound = false;
+    var angularJsFound = false;
+
+    var shims = new List<String>();
+    var files = new List<String>();
+    var requireModules = new List<String>();
+    var angularModules = new List<String>();
+
+    var convertToId = new Func<String, String>(input =>
+    {
+        input = input.Trim();
+        input = input.Replace('.', '_');
+        input = input.Replace('-', '_');
+        return input;
+    });
+
+    foreach (var moduleConfig in AmsModulesManager.Instance.RequiredModules)
+    {
+        if (moduleConfig.Module.Name == BuiltInModuleNames.RequireJS.ToString() && (moduleConfig.Scope & ModuleScope.Global) == ModuleScope.Global)
+        {
+            requireJsFound = true;
+        }
+        if (moduleConfig.Module.Name == BuiltInModuleNames.Angular.ToString())
+        {
+            angularJsFound = true;
+        }
+
+        if ((moduleConfig.Scope & ModuleScope.Isolated) == ModuleScope.Isolated)
+        {
+            files.AddRange(moduleConfig.Module.Scripts.Select(f => f.ToString().Replace("~", "").Replace(".js", "")));
+            if (moduleConfig.Module.Shims != null && moduleConfig.Module.Shims.Length > 0)
+            {
+                shims.AddRange(moduleConfig.Module.Shims.Select(shim => shim.ToString()));
+            }
+        }
+
+        if (moduleConfig.Type == ModuleType.AmdModule)
+        {
+            if (moduleConfig.Module.RequireFileNames)
+            {
+                requireModules.AddRange(moduleConfig.Module.Scripts.Select(file => String.Format("{0}", file.Name)));
+            }
+            else
+            {
+                requireModules.Add(String.Format("{0}", moduleConfig.Module.Name));
+            }
+
+            if (!moduleConfig.Module.IsPlainModule)
+            {
+                if (moduleConfig.Module.RequireFileNames)
+                {
+                    angularModules.AddRange(moduleConfig.Module.Scripts.Select(file => String.Format("'{0}'", file.Name)));
+                }
+                else
+                {
+                    angularModules.Add(String.Format("'{0}'", moduleConfig.Module.Name));
+                }
+            }
+        }
+    }
+
+    // Constants configuration
+    var constants = new List<String>
+    {
+        String.Format(".constant('CurrentLanguageDirection', '{0}')", CultureManager.Instance.IsRTL() ? "RTL" : "LTR"),
+        String.Format(".constant('CurrentLanguage', '{0}')", CultureManager.Instance.GetCurrentUICultureInfo().TwoLetterISOLanguageName),
+        String.Format(".constant('CurrentLanguageLCID', '{0}')", CultureManager.Instance.GetCurrentUICultureInfo().LCID)
+    };
+    var currentCultureResources = new List<ResourceContainer>();
+    foreach (var resource in AmsModulesManager.Instance.Resources)
+    {
+
+        var dataCultures = new List<DataCulture>();
+        foreach (var dataCulture in resource.DataCulture)
+        {
+            if (dataCulture.Culture.IsInvariant() || dataCulture.Culture.IsSameLanguage(System.Threading.Thread.CurrentThread.CurrentCulture))
+            {
+                dataCultures.Add(dataCulture);
+            }
+        }
+        if (dataCultures.Any())
+        {
+            var inlineResource = new ResourceContainer();
+
+            inlineResource.DataCulture = dataCultures;
+            inlineResource.Name = resource.Name;
+
+
+            currentCultureResources.Add(inlineResource);
+        }
+    }
+
+}
+
+@if (requireJsFound)
+{
+    <script type="text/javascript">
+        require.config({
+            shim: {
+                @Html.Raw(String.Join(", ", shims.ToArray())) @*@if (shims.Count > 0) { @Html.Raw(",") }*@
+            },
+            waitSeconds: 0,
+            map: {
+                '*' : {
+                    'jQuery': 'jquery',
+                    'Jquery': 'jquery'
+                }
+            },
+            paths: {
+                'siteResources': '/api/site/siteResources',
+                @Html.Raw(String.Join(", ", files.ToArray()))
+            }
+        });
+
+    </script>
+}
+
+@if (angularJsFound && requireJsFound)
+{
+    <script type="text/javascript">
+
+        require(['angular', 'siteResources' @if (requireModules.Count > 0) { @Html.Raw(",") } @Html.Raw(String.Join(", ", requireModules.Select(mod => String.Format("'{0}'", mod)).ToArray()))],
+    @{  this.WriteLiteral(String.Format("           function (angular,siteResources{0})", (requireModules.Count > 0 ? ", " + String.Join(", ", requireModules.Select(convertToId).ToArray()) : String.Empty))); }
+        {
+            angular.module('ams.ConfigurationManager', [])
+                @Html.Raw(String.Join("", constants))
+            .constant('resources', siteResources);
+
+        angular.module('ams', ['ams.ConfigurationManager', @Html.Raw(String.Join(", ", angularModules.ToArray()))])
+            .run(['$rootScope', function ($rootScope) {
+                $rootScope.$broadcast('ApplicationLoaded');
+            }]);
+
+        angular.bootstrap(document.getElementsByTagName('html'), ['ams']);
+
+        }, function (err) {
+            throw new ReferenceError('Failed to load ams modules: ' + err);
+        });
+
+    </script>
+    }

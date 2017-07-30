@@ -1,0 +1,409 @@
+﻿@using BSynchro.Web
+@using BSynchro.Web.Optimization.Globalization
+@using SogeCap.Common
+@using EBranch.Strategy.SogeCap;
+@using EBranch.Strategy.SogeCap.Models
+@{
+    if(Model.LanguageId.HasValue)
+        {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(Model.LanguageId.Value);
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(Model.LanguageId.Value);
+        }
+    var lang = CultureManager.Instance.GetCurrentUICultureInfo().TwoLetterISOLanguageName;
+    var dir = CultureManager.Instance.IsRTL() ? "rtl" : "ltr";
+}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="@lang" dir="@dir">
+
+<head>
+    <title>Title</title>
+    <!--<link href="common.css" rel="stylesheet" />-->
+
+
+
+    <style>
+        /* red #97282a */
+        /* blue #213b78 */
+        /* grey #333333 */
+
+        body {
+            font-family: "Segoe UI", "Calibri", "Helvetica", "Arial", sans-serif;
+            color: #333333;
+            padding-top: 5.5em;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            vertical-align: top;
+        }
+
+        h2 {
+            font-weight: normal;
+            color: #97282a;
+            font-size: 1.25em;
+        }
+
+        .header-tbl td {
+            width: 25%;
+            padding-bottom: 0.5em;
+        }
+
+            .header-tbl td span:first-of-type {
+                display: block;
+                font-style: italic;
+                color: #213b78;
+            }
+
+        .covers-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .covers-list li {
+                padding: 0.5em;
+                background-color: #efefef;
+                border-left: 0.175em solid #97282a;
+                margin-bottom: 0.25em;
+            }
+
+        .pricing-tbl th {
+            font-weight: normal;
+            font-style: italic;
+            color: #213b78;
+            text-align: right;
+        }
+
+        .pricing-tbl td {
+            text-align: right;
+            border-bottom: 0.1em solid #aaa;
+            padding-top: 0.25em;
+            padding-bottom: 0.25em;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="printoutpage @Model.InternalName">
+        <table class="header-tbl">
+            <tr>
+                <td>
+                    <span>@GetResource("ClientName","clientSituation")</span>
+                    <span>@Model.Client.FirstName @Model.Client.LastName</span>
+                </td>
+                <td>
+                    <span>@GetResource("DateOfBirth","Filters")</span>
+                    <span>@Model.Client.DateOfBirth.ToString(SiteConstants.SogeCapDateFormat)</span>
+                </td>
+                <td>
+                    <span>@GetResource("SimulationNumber","printouts").</span>
+                    <span>@Model.SimulationNumber.DisplayValue</span>
+                </td>
+                <td>
+                    <span>@GetResource("Product name","printouts")</span>
+                    <span>@Model.ProductName</span>
+                </td>
+            </tr>
+        </table>
+
+        <hr />
+
+        @if(@Model.Beneficiary !=null){
+        <table class="header-tbl">
+            <tr>
+                <td>
+                    <span>@GetResource("BeneficiaryName","printouts")</span>
+                    <span>@Model.Beneficiary.FirstName @Model.Beneficiary.LastName</span>
+                </td>
+                <td>
+                    @if(@Model.Beneficiary.DateOfBirth.HasValue)
+                    {
+                    <span>@GetResource("BeneficiaryDateOfBirth","printouts")</span>
+                    <span>@Model.Beneficiary.DateOfBirth.Value.ToLocalTime().ToString(SiteConstants.SogeCapDateFormat)</span>
+                    }
+                </td>
+                <td>
+                    @if(Model.Beneficiary.NumberOfUnits != 0)
+                    {
+                    <span>@GetResource("NumberOfUnits","common")</span>
+                    <span>@Model.Beneficiary.NumberOfUnits</span>
+                    }
+                </td>
+                <td>
+                    @if(Model.Beneficiary.UnitValue != 0)
+                    {
+                    <span>@GetResource("UnitValue","printouts")</span>
+                    <span>@Model.Beneficiary.UnitValue</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>@GetResource("SelectedOption","printouts")</span>
+                    <span>@Model.Beneficiary.SelectedOption</span>
+                </td>
+                <td>
+                    <span></span>
+                    <span></span>
+                </td>
+                <td>
+                    <span></span>
+                    <span></span>            
+                </td>
+                <td>
+                    <span></span>
+                    <span></span>                
+                </td>
+            </tr>
+        </table>
+        <hr />
+        }
+                @if(@Model.EducationResult !=null){
+                <table class="header-tbl">
+                    <tr>
+                        <td>
+                            
+                            <span>@GetResource("TotalPayment","common")</span>
+                            <span>@Model.EducationResult.FormattedTotalPayment</span>
+                            
+                        </td>
+                        <td>
+                            <span>@GetResource("TotalPremium","common")</span>
+                            <span>@Model.EducationResult.FormattedTotalPremium</span>
+                            
+                        </td>
+                        <td>
+                            @if(Model.EducationResult.TotalFees != 0)
+                            {
+                            <span>@GetResource("TotalFees","common")</span>
+                            <span>@Model.EducationResult.FormattedTotalFees</span>
+                            }
+                        </td>
+                        <td>
+                            <span></span>
+                            <span></span>
+                        </td>
+                    </tr> 
+                </table>              
+                <hr />
+                }
+
+                <table class="header-tbl">
+                    <tr>
+                        <td>
+                            @if(Model.PeriodicPayment != 0 && !(Model.ProductCode == "Proj" || Model.ProductCode == "Inv"))
+                            {
+                            <span>@GetResource("MonthlyPayment","common")</span>
+                            <span>@Model.FormattedPeriodicPayment @Model.Currency</span>
+                            }
+                        </td>
+                        <td>
+                            <span>@GetResource("Duration","common")</span>
+                            <span>@Model.Duration @GetResourceLowercase("Years","common")</span>
+                        </td>
+                        <td>
+                            <span>@GetResource("PaymentFrequency","common")</span>
+                            <span>@Model.PaymentFrequency</span>
+                        </td>
+
+                        <td>
+                            @if(Model.SumInsured != 0)
+                            {
+                            <span>@GetResource("SumInsured","clientSituation")</span>
+                            <span>@Model.FormattedSumInsured @Model.Currency</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @if(Model.Indexation != 0 )
+                            {
+                            <span>@GetResource("Indexation","needDetails")</span>
+                            <span>@Model.Indexation.ToPriceString(1)%</span>
+                            }
+                        </td>
+                        <td>
+                            <span>@GetResource("ProductPremium","printouts")</span>
+                            <span>@Model.FormattedPrice @Model.Currency</span>
+                        </td>
+                        <td>
+                            <span>@GetResource("MaturityDate","clientSituation")</span>
+                            <span>@Model.MaturityDate.ToString(SiteConstants.SogeCapDateFormat)</span>
+                        </td>
+                        <td>
+                            <span></span>
+                            <span></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        @if(Model.DownPayment.HasValue)
+                        {
+                        <td>
+
+                            <span>@GetResource("DownPayment","needDetails")</span>
+                            <span>@Model.FormattedDownPayment @Model.Currency</span>
+
+                        </td>
+                        }
+                        @if(Model.PaymentDuration != Model.Duration)
+                        {
+                        <td>
+
+                            <span>@GetResource("PaymentDuration","common")</span>
+                            <span>@Model.PaymentDuration @GetResourceLowercase("Years","common")</span>
+                        </td>
+                        }
+                        <!--@if(Model.MaturityDate.Date != Model.PaymentEndDate.Date)
+                        {
+                        <td>
+                            <span>@GetResource("PaymentEndDate","common")</span>
+                            <span>@Model.PaymentEndDate.ToString(SiteConstants.SogeCapDateFormat)</span>
+                        </td>
+                        }-->
+                        <td>
+                            <span></span>
+                            <span></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <hr />
+
+                <h2>@GetResource("Covers", "Filters")</h2>
+
+                <ul class="covers-list">
+                    @foreach(var cover in Model.CoverDisplays)
+                    {
+                    <li>@cover.FormattedDisplayText</li>
+                    }
+                </ul>
+
+                <hr />
+
+                @if(Model.PricingResult != null && !Model.PricingResult.ExceptionOccured){
+
+                <h2>@GetResource("Projection","printouts")</h2>
+
+                <table class="pricing-tbl">
+                    <thead>
+                        <tr>
+                            @foreach(var title in Model.PricingResult.Grid.Definitions)
+                            {
+                            <th>@title.displayName</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var result in Model.PricingResult.Grid.Data){
+                        <tr>
+                            <td>
+                                @result.InsuranceYear
+                            </td>
+                            <td>
+                                @result.InsuredAge
+                            </td>
+                            <td>
+                                @result.FormattedAnnualPremium
+                            </td>
+                            <td>
+                                @result.FormattedCumulativePremium
+                            </td>
+                            @foreach(var internalSaving in result.Rates)
+                            {
+                            <td>
+                                @internalSaving.FormattedValue
+                            </td>
+                            }
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                }
+                @if(Model.EducationSchooling != null){
+                if(Model.EducationSchooling.SchoolingData.Count > 0 ){
+                <h2>@GetResource("School","common")</h2>
+                <table class="pricing-tbl">
+                    <thead>
+                        <tr>
+                            <th>@GetResource("ClaimCase","common")</th>
+                            <th>@GetResource("ChildAge","common")</th>
+                            <th>@GetResource("AnnualPayment","common")</th>
+                            <th>@GetResource("GlobalCapital","common")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var result in Model.EducationSchooling.SchoolingData){
+                        <tr>
+                            <td>
+                                @result.ClaimCase
+                            </td>
+                            <td>
+                                @result.ChildAge
+                            </td>
+                            <td>
+                                @result.FormattedAnnualPayment @Model.Currency
+                            </td>
+                            <td>
+                                @result.FormattedGlobalCapital
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                }
+                if(Model.EducationSchooling.UniversityData.Count > 0 ){
+                <h2>
+                    @if(@Model.EducationSchooling.SchoolingData.Count > 0 ){
+                    <span>2-</span>
+                    }
+                    @if(@Model.EducationSchooling.SchoolingData.Count == 0 ){
+                    <span>1-</span>
+                    }
+                    @GetResource("University","common")
+                </h2>
+                <table class="pricing-tbl">
+                    <thead>
+                        <tr>
+                            <th>@GetResource("ClaimCase","common")</th>
+                            <th>@GetResource("ChildAge","common")</th>
+                            <th>@GetResource("AnnualPayment","common")</th>
+                            <th>@GetResource("GlobalCapital","common")</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach(var result in Model.EducationSchooling.UniversityData){
+                        <tr>
+                            <td>
+                                @result.ClaimCase
+                            </td>
+                            <td>
+                                @result.ChildAge
+                            </td>
+                            <td>
+                                @result.FormattedAnnualPayment @Model.Currency
+                            </td>
+                            <td>
+                                @result.FormattedGlobalCapital
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                }
+                }
+
+    </div>
+</body>
+</html>
+
+    @helper GetResource(String res,String parent)
+    {
+    @BSynchro.Web.Localization.ResourceManager.Instance.GetValue(res, parent)
+    }
+
+    @helper GetResourceLowercase(String res,String parent)
+    {
+    @BSynchro.Web.Localization.ResourceManager.Instance.GetValue(res, parent).ToLower()
+    }
